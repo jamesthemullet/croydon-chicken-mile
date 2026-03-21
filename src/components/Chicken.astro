@@ -1,0 +1,89 @@
+---
+interface Props {
+  size?: number;
+  class?: string;
+}
+const { size = 200, class: className = '' } = Astro.props;
+---
+
+<svg
+  width={size}
+  height={size}
+  viewBox="0 0 200 200"
+  xmlns="http://www.w3.org/2000/svg"
+  class={className}
+  aria-label="A funky cartoon chicken"
+>
+  <!-- Shadow -->
+  <ellipse cx="100" cy="188" rx="45" ry="8" fill="rgba(0,0,0,0.15)" />
+
+  <!-- Body -->
+  <ellipse cx="100" cy="140" rx="52" ry="48" fill="#F5C842" />
+  <!-- Body shading -->
+  <ellipse cx="112" cy="148" rx="32" ry="30" fill="#F0B830" opacity="0.5" />
+
+  <!-- Wing left -->
+  <ellipse cx="58" cy="145" rx="18" ry="28" fill="#E8A820" transform="rotate(-15 58 145)" />
+  <ellipse cx="56" cy="147" rx="12" ry="20" fill="#F5C842" transform="rotate(-15 56 147)" />
+
+  <!-- Wing right -->
+  <ellipse cx="142" cy="145" rx="18" ry="28" fill="#E8A820" transform="rotate(15 142 145)" />
+  <ellipse cx="144" cy="147" rx="12" ry="20" fill="#F5C842" transform="rotate(15 144 147)" />
+
+  <!-- Neck -->
+  <ellipse cx="100" cy="98" rx="22" ry="18" fill="#F5C842" />
+
+  <!-- Head -->
+  <circle cx="100" cy="76" r="30" fill="#F5C842" />
+  <!-- Head shading -->
+  <circle cx="108" cy="80" r="18" fill="#F0B830" opacity="0.4" />
+
+  <!-- Comb -->
+  <path d="M88 50 Q92 38 96 48 Q98 34 102 46 Q106 32 110 44 Q114 36 116 48" stroke="#E8210A" stroke-width="0" fill="#E8210A" />
+  <ellipse cx="92" cy="50" rx="6" ry="9" fill="#E8210A" transform="rotate(-10 92 50)" />
+  <ellipse cx="100" cy="46" rx="6" ry="10" fill="#E8210A" />
+  <ellipse cx="108" cy="50" rx="6" ry="9" fill="#E8210A" transform="rotate(10 108 50)" />
+
+  <!-- Wattle -->
+  <ellipse cx="96" cy="90" rx="6" ry="9" fill="#E8210A" />
+  <ellipse cx="104" cy="92" rx="5" ry="7" fill="#E8210A" />
+
+  <!-- Beak -->
+  <path d="M88 78 L80 82 L88 86 Z" fill="#FFB300" />
+
+  <!-- Eyes -->
+  <!-- Eye white left -->
+  <circle cx="91" cy="69" r="7" fill="white" />
+  <!-- Sunglasses left lens -->
+  <rect x="83" y="63" width="14" height="10" rx="5" fill="#1C0A00" />
+  <!-- Eye white right -->
+  <circle cx="109" cy="69" r="7" fill="white" />
+  <!-- Sunglasses right lens -->
+  <rect x="101" y="63" width="14" height="10" rx="5" fill="#1C0A00" />
+  <!-- Sunglasses bridge -->
+  <line x1="97" y1="67" x2="101" y2="67" stroke="#1C0A00" stroke-width="2" />
+  <!-- Sunglasses frame -->
+  <rect x="83" y="63" width="14" height="10" rx="5" fill="none" stroke="#FFD000" stroke-width="1.5" />
+  <rect x="101" y="63" width="14" height="10" rx="5" fill="none" stroke="#FFD000" stroke-width="1.5" />
+  <!-- Glint -->
+  <circle cx="87" cy="66" r="1.5" fill="white" opacity="0.7" />
+  <circle cx="105" cy="66" r="1.5" fill="white" opacity="0.7" />
+
+  <!-- Feet -->
+  <!-- Left leg -->
+  <line x1="85" y1="183" x2="82" y2="165" stroke="#FFB300" stroke-width="5" stroke-linecap="round" />
+  <!-- Left toes -->
+  <line x1="82" y1="183" x2="72" y2="186" stroke="#FFB300" stroke-width="3.5" stroke-linecap="round" />
+  <line x1="82" y1="183" x2="82" y2="188" stroke="#FFB300" stroke-width="3.5" stroke-linecap="round" />
+  <line x1="82" y1="183" x2="90" y2="187" stroke="#FFB300" stroke-width="3.5" stroke-linecap="round" />
+
+  <!-- Right leg -->
+  <line x1="115" y1="183" x2="118" y2="165" stroke="#FFB300" stroke-width="5" stroke-linecap="round" />
+  <!-- Right toes -->
+  <line x1="118" y1="183" x2="108" y2="187" stroke="#FFB300" stroke-width="3.5" stroke-linecap="round" />
+  <line x1="118" y1="183" x2="118" y2="188" stroke="#FFB300" stroke-width="3.5" stroke-linecap="round" />
+  <line x1="118" y1="183" x2="126" y2="186" stroke="#FFB300" stroke-width="3.5" stroke-linecap="round" />
+
+  <!-- Belly speckles -->
+  <ellipse cx="100" cy="148" rx="18" ry="14" fill="#FFF3A3" opacity="0.6" />
+</svg>

@@ -1,0 +1,144 @@
+---
+interface Props {
+  name: string;
+  tagline: string;
+  specialty: string;
+  address: string;
+  rating: number; // out of 5 drumsticks
+  mustTry: string;
+  badge?: string;
+}
+const { name, tagline, specialty, address, rating, mustTry, badge } = Astro.props;
+const drumsticks = Array.from({ length: 5 }, (_, i) => i < rating);
+---
+
+<article class="card">
+  {badge && <span class="badge">{badge}</span>}
+  <div class="card-header">
+    <div class="placeholder-img" aria-label={`Photo of ${name}`}>
+      <span class="img-icon">🍗</span>
+    </div>
+  </div>
+  <div class="card-body">
+    <h3 class="card-name">{name}</h3>
+    <p class="card-tagline">"{tagline}"</p>
+    <p class="card-specialty"><strong>Known for:</strong> {specialty}</p>
+    <p class="card-must-try"><strong>Must try:</strong> {mustTry}</p>
+    <p class="card-address">📍 {address}</p>
+    <div class="drumstick-rating" aria-label={`${rating} out of 5 drumsticks`}>
+      {drumsticks.map(filled => (
+        <span class:list={['drumstick', { filled }]}>🍗</span>
+      ))}
+    </div>
+  </div>
+</article>
+
+<style>
+  .card {
+    position: relative;
+    background: var(--white);
+    border: 3px solid var(--dark);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 6px 6px 0 var(--dark);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 9px 9px 0 var(--dark);
+  }
+
+  .badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: var(--red);
+    color: white;
+    font-family: 'Bangers', cursive;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 2px solid var(--dark);
+    z-index: 1;
+    transform: rotate(3deg);
+  }
+
+  .card-header {
+    background: linear-gradient(135deg, var(--red) 0%, var(--orange) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 140px;
+  }
+
+  .placeholder-img {
+    width: 90px;
+    height: 90px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    border: 3px dashed rgba(255,255,255,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .img-icon {
+    font-size: 2.5rem;
+    filter: grayscale(0.2);
+  }
+
+  .card-body {
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    flex: 1;
+  }
+
+  .card-name {
+    font-size: 1.6rem;
+    color: var(--red-dark);
+    line-height: 1.1;
+  }
+
+  .card-tagline {
+    font-style: italic;
+    color: var(--brown);
+    font-size: 0.85rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .card-specialty,
+  .card-must-try {
+    font-size: 0.9rem;
+    color: var(--dark);
+  }
+
+  .card-address {
+    font-size: 0.82rem;
+    color: #666;
+    margin-top: auto;
+    padding-top: 0.4rem;
+  }
+
+  .drumstick-rating {
+    display: flex;
+    gap: 2px;
+    margin-top: 0.5rem;
+  }
+
+  .drumstick {
+    font-size: 1rem;
+    opacity: 0.2;
+    filter: grayscale(1);
+  }
+
+  .drumstick.filled {
+    opacity: 1;
+    filter: none;
+  }
+</style>
