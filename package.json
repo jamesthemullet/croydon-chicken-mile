@@ -9,7 +9,9 @@
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
     "lint:errors": "biome check . | findstr error",
-    "ts-check": "astro check"
+    "ts-check": "astro check",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "astro": "^4.15.0"
@@ -17,6 +19,8 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.0",
     "@biomejs/biome": "^2.0.0",
-    "typescript": "^5.0.0"
+    "@vitest/ui": "^4.1.4",
+    "typescript": "^5.0.0",
+    "vitest": "^4.1.4"
   }
 }
