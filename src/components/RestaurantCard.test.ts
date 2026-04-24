@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 // Logic extracted from RestaurantCard.astro frontmatter
 const makeDrumsticks = (rating: number) =>
