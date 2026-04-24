@@ -193,7 +193,7 @@ const restaurants = [
         <span class="map-icon">🗺️</span>
         <p><strong>Drop a Google Maps embed here</strong></p>
         <p>Centre on: Croydon High Street / North End, CR0</p>
-        <p style="font-size:0.8rem; opacity: 0.6; margin-top: 0.5rem;">
+        <p class="small-muted">
           &lt;iframe src="https://maps.google.com/..." /&gt;
         </p>
       </div>
@@ -209,7 +209,7 @@ const restaurants = [
       <div class="footer-right">
         <p class="footer-title">Croydon Chicken Mile</p>
         <p>Made with 🍗 and genuine civic pride.</p>
-        <p style="font-size: 0.8rem; opacity: 0.6; margin-top: 0.5rem;">
+        <p class="small-muted">
           Not affiliated with any chicken. All opinions are the author's own and are delicious.
         </p>
       </div>
@@ -597,6 +597,12 @@ const restaurants = [
     color: var(--cream);
     font-size: 0.95rem;
     line-height: 1.6;
+  }
+
+  .small-muted {
+    font-size: 0.8rem;
+    opacity: 0.6;
+    margin-top: 0.5rem;
   }
 
   /* RESPONSIVE */
