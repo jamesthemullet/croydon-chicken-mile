@@ -1,15 +1,43 @@
 ---
 interface Props {
 	title?: string;
+	description?: string;
+	ogImage?: string;
 }
-const { title = "The Croydon Chicken Mile" } = Astro.props;
+const {
+	title = "The Croydon Chicken Mile",
+	description = "Your definitive guide to the greatest concentration of fried chicken shops on planet Earth. Croydon, we salute you.",
+	ogImage = "https://croydonchickenmile.co.uk/images/welcome-to-croydon-chicken-mile.png",
+} = Astro.props;
+const canonicalURL = new URL(
+	Astro.url.pathname,
+	"https://croydonchickenmile.co.uk",
+);
 ---
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Your definitive guide to the greatest concentration of fried chicken shops on planet Earth. Croydon, we salute you." />
+    <meta name="description" content={description} />
+
+    <!-- Canonical -->
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="en_GB" />
+
+    <!-- Twitter/X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
     <title>{title}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
