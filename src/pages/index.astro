@@ -1,78 +1,149 @@
 ---
-import Chicken from '../components/Chicken.astro';
-import RestaurantCard from '../components/RestaurantCard.astro';
-import Layout from '../layouts/Layout.astro';
+import Chicken from "../components/Chicken.astro";
+import LeafletMap from "../components/LeafletMap.astro";
+import RestaurantCard from "../components/RestaurantCard.astro";
+import Layout from "../layouts/Layout.astro";
 
 const restaurants = [
-  {
-    name: "Placeholder Chicken Co.",
-    tagline: "Better than your mum's",
-    specialty: "Two-piece & chips",
-    address: "1 High Street, Croydon CR0 1AA",
-    rating: 5,
-    mustTry: "The Legendary Box Meal",
-    badge: "LEGENDARY"
-  },
-  {
-    name: "Wing King Croydon",
-    tagline: "We put the wing in winning",
-    specialty: "Buffalo wings, 12 flavours",
-    address: "23 Church Street, Croydon CR0 1RH",
-    rating: 4,
-    mustTry: "Dirty Dozen Wing Bucket",
-    badge: "FAN FAVOURITE"
-  },
-  {
-    name: "Golden Cluck",
-    tagline: "Since 1987. Still cracking.",
-    specialty: "Old-school Southern fry",
-    address: "77 London Road, Croydon CR0 2TB",
-    rating: 5,
-    mustTry: "The Original Fillet Burger",
-    badge: "EST. 1987"
-  },
-  {
-    name: "Cluckmaster General",
-    tagline: "Resistance is futile",
-    specialty: "Nashville hot chicken",
-    address: "12 Wellesley Road, Croydon CR0 2AD",
-    rating: 4,
-    mustTry: "Nuclear Hot Sandwich"
-  },
-  {
-    name: "Peri Peri Palace",
-    tagline: "The heat is on",
-    specialty: "Spiced whole chickens",
-    address: "56 North End, Croydon CR0 1TH",
-    rating: 4,
-    mustTry: "Half Chicken Extra Hot"
-  },
-  {
-    name: "Crunch & Co.",
-    tagline: "Maximum crunch guaranteed",
-    specialty: "Double-battered strips",
-    address: "99 George Street, Croydon CR0 1PB",
-    rating: 3,
-    mustTry: "The Strip Stack"
-  },
-  {
-    name: "Midnight Cluck",
-    tagline: "Open when you need us most",
-    specialty: "Late-night loaded fries",
-    address: "34 Southbridge Road, Croydon CR0 1AF",
-    rating: 4,
-    mustTry: "Loaded Chicken Cheese Fries",
-    badge: "OPEN LATE"
-  },
-  {
-    name: "The Boneless Wonder",
-    tagline: "No bones, no drama",
-    specialty: "Tenders & dips",
-    address: "8 Surrey Street, Croydon CR0 1RG",
-    rating: 3,
-    mustTry: "The Wonder Box (6 tenders)"
-  }
+	{
+		name: "Poor Boys @ BoxPark",
+		tagline: "New Orleans Eatery, Reimagined in Croydon",
+		specialty: "Chicken",
+		address: "99 George St, Croydon CR0 1LD",
+		image: "/images/poor-boys-boxpark.jpg",
+		lat: 51.372361,
+		lng: -0.100401,
+	},
+	{
+		name: "RAPS @ BoxPark",
+		tagline:
+			"Built for fans of soul food who refuse to choose between health and indulgence.",
+		specialty: "Chicken",
+		address: "99 George St, Croydon CR0 1LD",
+		image: "/images/raps-boxpark.jpg",
+		lat: 51.372360,
+		lng: -0.100405,
+	},
+	{
+		name: "Sam's",
+		tagline: "The home of great tasting chicken",
+		specialty: "Chicken",
+		address: "46 High St, Croydon CR0 1YB",
+		image: "/images/sams.jpg",
+		badge: "4am close on Fri/Sat",
+		lat: 51.3722483,
+		lng: -0.1005771,
+	},
+	{
+		name: "Rio's Piri Piri",
+		tagline: "Newly refurbed",
+		specialty: "Chicken",
+		address: "48 High St, Croydon CR0 1YB",
+		image: "/images/rios-piri-piri.jpg",
+		lat: 51.37228012084961,
+		lng: -0.10063029825687408,
+	},
+	{
+		name: "Dave's Hot Chicken",
+		tagline: "Upper class fried chicken",
+		specialty: "Chicken",
+		address: "7, 11 High St, Croydon CR0 1QB",
+		lat: 51.37342071533203,
+		lng: -0.1003,
+	},
+	{
+		name: "Pepe's",
+		tagline: "The home of fresh flame grilled chicken",
+		specialty: "Chicken",
+		address: "52 George St, Croydon CR0 1PD",
+		lat: 51.3738299,
+		lng: -0.0976982,
+	},
+	{
+		name: "Popeyes",
+		tagline: "All the way from Louisiana...don't forget the cajun gravy",
+		specialty: "Chicken",
+		address: "43 George St, Croydon CR0 1LB",
+		lat: 51.3742851,
+		lng: -0.0972591,
+	},
+	{
+		name: "Roosters Piri Piri Croydon",
+		tagline: "Fresh, grilled and healthy",
+		specialty: "Chicken",
+		address: "Unit 13, Norfolk House, Wellesley Rd, Croydon CR0 1LH",
+		lat: 51.3746507,
+		lng: -0.0967463,
+	},
+	{
+		name: "Chick'n Box",
+		tagline: "Hotter than your ex",
+		specialty: "Chicken",
+		address: "79 George St, Croydon CR0 1LD",
+		lat: 51.3745907,
+		lng: -0.0948675,
+	},
+	{
+		name: "Chicken Valley Croydon",
+		tagline: "Joy in every bite",
+		specialty: "Chicken",
+		address: "100 High St, Croydon CR0 1ND",
+		lat: 51.3702522,
+		lng: -0.1001995,
+	},
+	{
+		name: "Chicking Croydon",
+		tagline: "It's my choice. It's my chicken.",
+		specialty: "Chicken",
+		address: "282 High St, Croydon CR0 1NG",
+		lat: 51.3683786,
+		lng: -0.0996001,
+	},
+	{
+		name: "Rooster King - Croydon",
+		tagline: "Sizzling taste.",
+		specialty: "Chicken",
+		address: "10 S End, Croydon CR0 1DL",
+		lat: 51.367038,
+		lng: -0.099201,
+	},
+	{
+		name: "Southend Chick-Inn Peri Peri",
+		tagline: "Chick -Inn.  Peri - Peri.",
+		specialty: "Chicken",
+		address: "87 S End, Croydon CR0 1BG",
+		lat: 51.3647778,
+		lng: -0.1013231,
+	},
+	{
+		name: "Perfect Fried Chicken - Croydon",
+		tagline: "One of the OGs",
+		specialty: "Chicken",
+		address: "95a S End, Croydon CR0 1BG",
+		lat: 51.3645399,
+		lng: -0.1012771,
+	},
+	{
+		name: "Chicken Tingz",
+		tagline: "Things that are chicken",
+		specialty: "Chicken",
+		address: "123 S End, Croydon CR0 1BJ",
+		lat: 51.3637703,
+		lng: -0.1005952,
+	},
+	{
+		name: "The Green Dragon",
+		tagline: "It's actually a really good pub, but guess what they sell?",
+		specialty: "Beer. Also chicken",
+		address: "58-60 High St, Croydon CR0 1NA",
+		lat: 51.3716839,
+		lng: -0.1055576,
+	},
 ];
+
+const mapMarkers = restaurants
+	.filter((r) => r.lat && r.lng)
+	.map((r) => ({ name: r.name, address: r.address, lat: r.lat!, lng: r.lng! }));
 ---
 
 <Layout>
@@ -171,6 +242,10 @@ const restaurants = [
           Your definitive guide to Croydon's finest chicken establishments.
           Rated in drumsticks, obviously.
         </p>
+        <p class="mile-definition">
+          From BoxPark down through High Street — as defined by the Croydon Tourist Board.
+          There are chicken shops elsewhere. This is <em>the</em> Mile.
+        </p>
         <div class="drumstick-key">
           <span>🍗🍗🍗🍗🍗 = Life changing &nbsp;&nbsp; 🍗🍗🍗 = Solid outing &nbsp;&nbsp; 🍗 = Still better than a salad</span>
         </div>
@@ -185,18 +260,12 @@ const restaurants = [
     </div>
   </section>
 
-  <!-- MAP PLACEHOLDER -->
+  <!-- MAP -->
   <section class="map-section">
     <div class="container">
       <h2>Find the Mile</h2>
-      <div class="map-placeholder">
-        <span class="map-icon">🗺️</span>
-        <p><strong>Drop a Google Maps embed here</strong></p>
-        <p>Centre on: Croydon High Street / North End, CR0</p>
-        <p class="small-muted">
-          &lt;iframe src="https://maps.google.com/..." /&gt;
-        </p>
-      </div>
+      <p class="map-definition">From BoxPark down through High Street. As defined by the Croydon Tourist Board.</p>
+      <LeafletMap markers={mapMarkers} center={[51.374, -0.1]} zoom={15} />
     </div>
   </section>
 
@@ -508,6 +577,15 @@ const restaurants = [
     line-height: 1.6;
   }
 
+  .mile-definition {
+    font-size: 0.95rem;
+    color: var(--brown);
+    max-width: 480px;
+    margin: 0 auto 1.25rem;
+    line-height: 1.6;
+    font-style: italic;
+  }
+
   .drumstick-key {
     font-size: 0.8rem;
     color: #888;
@@ -547,25 +625,15 @@ const restaurants = [
     font-size: 3rem;
     color: var(--dark);
     text-align: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
   }
 
-  .map-placeholder {
-    background: rgba(0,0,0,0.08);
-    border: 3px dashed var(--dark);
-    border-radius: 16px;
-    height: 300px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
+  .map-definition {
     text-align: center;
+    font-size: 0.95rem;
     color: var(--brown);
-  }
-
-  .map-icon {
-    font-size: 3rem;
+    font-style: italic;
+    margin-bottom: 1.5rem;
   }
 
   /* FOOTER */
