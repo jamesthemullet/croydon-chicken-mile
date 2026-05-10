@@ -1,35 +1,39 @@
 ---
 interface Props {
-  name: string;
-  tagline: string;
-  specialty: string;
-  address: string;
-  rating: number; // out of 5 drumsticks
-  mustTry: string;
-  badge?: string;
+	name: string;
+	tagline: string;
+	specialty: string;
+	address: string;
+	rating?: number;
+	mustTry?: string;
+	badge?: string;
+	image?: string;
 }
-const { name, tagline, specialty, address, rating, mustTry, badge } = Astro.props;
-const drumsticks = Array.from({ length: 5 }, (_, i) => i < rating);
+const { name, tagline, specialty, address, badge, image } = Astro.props;
 ---
 
 <article class="card">
   {badge && <span class="badge">{badge}</span>}
   <div class="card-header">
-    <div class="placeholder-img" aria-label={`Photo of ${name}`}>
-      <span class="img-icon">🍗</span>
-    </div>
+    {image ? (
+      <img src={image} alt={`Photo of ${name}`} class="card-img" />
+    ) : (
+      <div class="placeholder-img" aria-label={`Photo of ${name}`}>
+        <span class="img-icon">🍗</span>
+      </div>
+    )}
   </div>
   <div class="card-body">
     <h3 class="card-name">{name}</h3>
     <p class="card-tagline">"{tagline}"</p>
     <p class="card-specialty"><strong>Known for:</strong> {specialty}</p>
-    <p class="card-must-try"><strong>Must try:</strong> {mustTry}</p>
+    <!-- <p class="card-must-try"><strong>Must try:</strong> {mustTry}</p> -->
     <p class="card-address">📍 {address}</p>
-    <div class="drumstick-rating" aria-label={`${rating} out of 5 drumsticks`}>
+    <!-- <div class="drumstick-rating" aria-label={`${rating} out of 5 drumsticks`}>
       {drumsticks.map(filled => (
         <span class:list={['drumstick', { filled }]}>🍗</span>
       ))}
-    </div>
+    </div> -->
   </div>
 </article>
 
@@ -73,6 +77,14 @@ const drumsticks = Array.from({ length: 5 }, (_, i) => i < rating);
     align-items: center;
     justify-content: center;
     height: 140px;
+    overflow: hidden;
+  }
+
+  .card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
 
   .placeholder-img {

@@ -7,7 +7,9 @@
   "exclude": [
     "dist",
     "node_modules",
-    "coverage"
+    "coverage",
+    "playwright.config.ts",
+    "e2e"
   ],
   "compilerOptions": {
     "strict": true,
