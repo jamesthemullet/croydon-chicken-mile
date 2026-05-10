@@ -11,7 +11,8 @@
     "lint:errors": "biome check . | findstr error",
     "ts-check": "astro check",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "leaflet": "^1.9.4"
@@ -20,6 +21,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.0",
     "@biomejs/biome": "^2.0.0",
+    "@playwright/test": "^1.59.1",
     "@types/leaflet": "^1.9.21",
     "@vitest/ui": "^4.1.4",
     "typescript": "^6.0.0",
