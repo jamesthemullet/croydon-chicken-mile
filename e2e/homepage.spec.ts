@@ -15,7 +15,7 @@ test("hero heading is visible", async ({ page }) => {
 test("nav links scroll to sections", async ({ page }) => {
 	await page.goto("/");
 	await page.getByRole("link", { name: "The Mile" }).click();
-	await expect(page.getByRole("heading", { name: "The Mile" })).toBeInViewport();
+	await expect(page.getByRole("heading", { name: "The Mile", exact: true })).toBeInViewport();
 });
 
 test("restaurant cards are rendered", async ({ page }) => {
