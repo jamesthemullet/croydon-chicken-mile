@@ -4,14 +4,12 @@ interface Props {
 	tagline: string;
 	specialty: string;
 	address: string;
-	rating: number; // out of 5 drumsticks
-	mustTry: string;
+	rating?: number;
+	mustTry?: string;
 	badge?: string;
 	image?: string;
 }
-const { name, tagline, specialty, address, rating, mustTry, badge, image } =
-	Astro.props;
-const drumsticks = Array.from({ length: 5 }, (_, i) => i < rating);
+const { name, tagline, specialty, address, badge, image } = Astro.props;
 ---
 
 <article class="card">
