@@ -1,6 +1,6 @@
 ---
 description: Audit and incrementally improve accessibility for this Astro project
-allowed-tools: Bash, Read, Write, Edit, Glob, Grep
+allowed-tools: Bash, Read, Write, Edit, Glob, Grep, mcp__github__create_pull_request
 ---
 
 You are running an incremental accessibility improvement session for this Astro / TypeScript static site.
@@ -41,7 +41,37 @@ yarn lint 2>&1
 
 If linting fails, fix the issue before reporting.
 
-### Step 4 — Report
+### Step 4 — Commit, push, and open a PR
+
+Commit the fix, push the branch, and create a pull request:
+
+```bash
+git add -p   # stage only the changed files
+git commit -m "<short imperative summary>
+
+<one sentence explaining the WCAG criterion and why the fix matters>
+
+Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>"
+git push
+gh pr create \
+  --title "<same short summary>" \
+  --body "## Summary
+- <bullet: what was broken and why>
+- <bullet: what was changed>
+
+**WCAG criterion:** <e.g. 1.3.6 Identify Purpose>
+
+## Test plan
+- [ ] <screen-reader or keyboard check specific to this fix>
+- [ ] Confirm no visual changes
+- [ ] \`yarn lint\` passes with no new errors
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)"
+```
+
+If a PR for this branch already exists (exit code 1 from `gh pr create`), the push has already updated it — note the existing PR URL instead.
+
+### Step 5 — Report
 
 Output exactly this structure:
 
@@ -65,5 +95,5 @@ Output exactly this structure:
 - **Colour palette reference:** Custom properties are defined in `src/layouts/Layout.astro` — `--red: #E8210A`, `--yellow: #FFD000`, `--dark: #1C0A00`, `--cream: #FFF8EE`, `--brown: #3D1C00`. Use these when assessing contrast ratios.
 - **Skip link:** There is currently no skip-to-main-content link — this is a valid finding under category 1 (Keyboard navigation), WCAG 2.4.1
 - **Reduced-motion:** The `bob` animation on `.hero-chicken` and the `ticker` animation currently have no `prefers-reduced-motion` override — this is a valid finding under category 5
-- **Landmark labels:** `<section id="about">`, `<section id="the-mile">`, and `.map-section` are unlabelled landmark regions — screen readers announce them without descriptive names, which is a valid finding under category 3
+- **Landmark labels:** `<section id="about">`, `<section id="the-mile">`, and `.map-section` now all have `aria-labelledby` pointing to their `<h2>` headings — do not re-flag these
 - **Biome rules:** `noUnusedVariables` and `noUnusedImports` are off in `biome.json` — dead import findings must be verified manually
