@@ -41,7 +41,30 @@ yarn lint 2>&1
 
 If linting fails, fix the issue before reporting.
 
-### Step 4 — Report
+### Step 4 — Commit and open a PR
+
+Stage and commit only the changed file(s), then push and open a pull request targeting `main`:
+
+```bash
+git add <changed files>
+git commit -m "<short description of the quality fix>"
+git push -u origin HEAD
+gh pr create --title "<short title>" --body "$(cat <<'EOF'
+## Summary
+- <category> fix in <file>
+- <one sentence describing the issue and what was changed>
+
+## Test plan
+- Linter passes: `yarn lint`
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+EOF
+)"
+```
+
+Return the PR URL.
+
+### Step 5 — Report
 
 Output exactly this structure:
 

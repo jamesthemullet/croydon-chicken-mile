@@ -99,7 +99,31 @@ Fix any failures before reporting back.
 
 ---
 
-## Step 5: Report
+## Step 5: Commit and open a PR
+
+Stage and commit only the new or modified test files, then push and open a pull request targeting `main`:
+
+```bash
+git add <test files>
+git commit -m "<short description of what was tested and why>"
+git push -u origin HEAD
+gh pr create --title "<short title>" --body "$(cat <<'EOF'
+## Summary
+- <what was added and why>
+
+## Test plan
+- Tests pass: `yarn test` / `yarn test:e2e`
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+EOF
+)"
+```
+
+Return the PR URL.
+
+---
+
+## Step 6: Report
 
 - What you chose and why
 - File(s) created or modified
