@@ -4,8 +4,6 @@ interface Props {
 	tagline: string;
 	specialty: string;
 	address: string;
-	rating?: number;
-	mustTry?: string;
 	badge?: string;
 	image?: string;
 }
@@ -27,13 +25,7 @@ const { name, tagline, specialty, address, badge, image } = Astro.props;
     <h3 class="card-name">{name}</h3>
     <p class="card-tagline">"{tagline}"</p>
     <p class="card-specialty"><strong>Known for:</strong> {specialty}</p>
-    <!-- <p class="card-must-try"><strong>Must try:</strong> {mustTry}</p> -->
     <p class="card-address">📍 {address}</p>
-    <!-- <div class="drumstick-rating" aria-label={`${rating} out of 5 drumsticks`}>
-      {drumsticks.map(filled => (
-        <span class:list={['drumstick', { filled }]}>🍗</span>
-      ))}
-    </div> -->
   </div>
 </article>
 
@@ -124,8 +116,7 @@ const { name, tagline, specialty, address, badge, image } = Astro.props;
     margin-bottom: 0.4rem;
   }
 
-  .card-specialty,
-  .card-must-try {
+  .card-specialty {
     font-size: 0.9rem;
     color: var(--dark);
   }
@@ -135,22 +126,5 @@ const { name, tagline, specialty, address, badge, image } = Astro.props;
     color: #666;
     margin-top: auto;
     padding-top: 0.4rem;
-  }
-
-  .drumstick-rating {
-    display: flex;
-    gap: 2px;
-    margin-top: 0.5rem;
-  }
-
-  .drumstick {
-    font-size: 1rem;
-    opacity: 0.2;
-    filter: grayscale(1);
-  }
-
-  .drumstick.filled {
-    opacity: 1;
-    filter: none;
   }
 </style>
