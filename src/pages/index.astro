@@ -270,21 +270,17 @@ const mapMarkers = restaurants
         <h2 class="section-title">The Mile</h2>
         <p class="section-sub">
           Your definitive guide to Croydon's finest chicken establishments.
-          Rated in drumsticks, obviously.
         </p>
         <p class="mile-definition">
           From BoxPark down through High Street — as defined by the Croydon Tourist Board.
           There are chicken shops elsewhere. This is <em>the</em> Mile.
         </p>
-        <div class="drumstick-key">
-          <span>🍗🍗🍗🍗🍗 = Life changing &nbsp;&nbsp; 🍗🍗🍗 = Solid outing &nbsp;&nbsp; 🍗 = Still better than a salad</span>
-        </div>
       </div>
       <div class="restaurant-grid">
         {restaurants.map(r => <RestaurantCard {...r} />)}
       </div>
+      <p class="missed-a-shop">Missed a chicken shop? <a href="mailto:deepfried@croydonchickenmile.co.uk?subject=Fried%20Chicken%20Is%20Better%20Than%20Sex">Let us know.</a></p>
       <p class="disclaimer">
-        * Restaurant details are placeholders — replace with real names, addresses, and opinions.
         No chickens were harmed in the making of this website. (Some were, however, delicious.)
       </p>
     </div>
@@ -310,6 +306,12 @@ const mapMarkers = restaurants
         <p>Made with 🍗 and genuine civic pride.</p>
         <p class="small-muted">
           Not affiliated with any chicken. All opinions are the author's own and are delicious.
+        </p>
+        <p class="small-muted">
+          Got suggestions to improve the website? Want to tell us about your favourite chicken shop on the Mile? Found a typo? <a href="mailto:deepfried@croydonchickenmile.co.uk?subject=Fried%20Chicken%20Is%20Better%20Than%20Sex">Let us know.</a>
+        </p>
+        <p class="small-muted">
+          This website is a bit of fun. If you are offended, we respectfully suggest you go eat some chick'n, no-chick'n, plant-based chicken, Quorn, or THIS Isn't Chicken — and think about what you've done.
         </p>
       </div>
     </div>
@@ -633,6 +635,21 @@ const mapMarkers = restaurants
     margin-bottom: 2rem;
   }
 
+  .missed-a-shop {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 0.95rem;
+  }
+
+  .missed-a-shop a {
+    color: var(--red);
+    text-decoration: none;
+  }
+
+  .missed-a-shop a:hover {
+    text-decoration: underline;
+  }
+
   .disclaimer {
     text-align: center;
     font-size: 0.78rem;
@@ -699,8 +716,17 @@ const mapMarkers = restaurants
 
   .small-muted {
     font-size: 0.8rem;
-    opacity: 0.6;
     margin-top: 0.5rem;
+  }
+
+  footer .small-muted a {
+    color: var(--yellow);
+    opacity: 1;
+    text-decoration: none;
+  }
+
+  footer .small-muted a:hover {
+    text-decoration: underline;
   }
 
   /* RESPONSIVE */
