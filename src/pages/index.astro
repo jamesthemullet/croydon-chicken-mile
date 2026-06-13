@@ -186,6 +186,8 @@ const mapMarkers = restaurants
     </div>
   </nav>
 
+  <main>
+
   <!-- HERO -->
   <header class="hero">
     <div class="hero-bg-stripes" aria-hidden="true"></div>
@@ -219,7 +221,7 @@ const mapMarkers = restaurants
   </header>
 
   <!-- ABOUT -->
-  <section id="about" class="about">
+  <section id="about" class="about" aria-label="About">
     <div class="container">
       <div class="about-inner">
         <div class="about-text">
@@ -264,7 +266,7 @@ const mapMarkers = restaurants
   </section>
 
   <!-- THE MILE -->
-  <section id="the-mile" class="the-mile">
+  <section id="the-mile" class="the-mile" aria-label="The Mile">
     <div class="container">
       <div class="section-header">
         <h2 class="section-title">The Mile</h2>
@@ -287,13 +289,15 @@ const mapMarkers = restaurants
   </section>
 
   <!-- MAP -->
-  <section class="map-section">
+  <section class="map-section" aria-label="Find the Mile">
     <div class="container">
       <h2>Find the Mile</h2>
       <p class="map-definition">From BoxPark down through High Street. As defined by the Croydon Tourist Board.</p>
       <LeafletMap markers={mapMarkers} center={[51.374, -0.1]} zoom={15} />
     </div>
   </section>
+
+  </main>
 
   <!-- FOOTER -->
   <footer>
@@ -632,8 +636,8 @@ const mapMarkers = restaurants
   }
 
   .missed-a-shop a {
-    color: var(--red);
-    text-decoration: none;
+    color: var(--red-dark);
+    text-decoration: underline;
   }
 
   .missed-a-shop a:hover {
@@ -643,7 +647,7 @@ const mapMarkers = restaurants
   .disclaimer {
     text-align: center;
     font-size: 0.78rem;
-    color: #999;
+    color: var(--brown);
     font-style: italic;
     max-width: 600px;
     margin: 0 auto;
@@ -712,7 +716,7 @@ const mapMarkers = restaurants
   footer .small-muted a {
     color: var(--yellow);
     opacity: 1;
-    text-decoration: none;
+    text-decoration: underline;
   }
 
   footer .small-muted a:hover {

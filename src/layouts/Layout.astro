@@ -50,6 +50,12 @@ const canonicalURL = new URL(
       import { inject } from '@vercel/analytics';
       inject();
     </script>
+    {import.meta.env.PUBLIC_ENABLE_ACCENTED && (
+      <script>
+        import { accented } from 'accented';
+        accented();
+      </script>
+    )}
   </body>
 </html>
 
