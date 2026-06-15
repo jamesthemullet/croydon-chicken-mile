@@ -14,7 +14,7 @@ const { name, tagline, specialty, address, badge, image } = Astro.props;
   {badge && <span class="badge">{badge}</span>}
   <div class="card-header">
     {image ? (
-      <img src={image} alt={`Photo of ${name}`} class="card-img" />
+      <img src={image} alt={`Photo of ${name}`} class="card-img" loading="lazy" width="400" height="140" />
     ) : (
       <div class="placeholder-img" aria-label={`Photo of ${name}`}>
         <span class="img-icon">🍗</span>
