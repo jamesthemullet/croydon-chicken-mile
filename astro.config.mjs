@@ -10,4 +10,9 @@ export default defineConfig({
       enabled: true,
     },
   }),
+  vite: {
+    build: {
+      modulePreload: { polyfill: false },
+    },
+  },
 });
