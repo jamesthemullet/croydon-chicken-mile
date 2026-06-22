@@ -27,18 +27,25 @@ const { restaurants } = Astro.props;
   </div>
 </div>
 
-<script type="application/json" id="wheel-data" set:html={JSON.stringify(restaurants)}></script>
+<script type="application/json" id="wheel-data" is:inline set:html={JSON.stringify(restaurants)}></script>
 
 <script>
-  const restaurants = JSON.parse(document.getElementById('wheel-data').textContent);
-  const canvas = document.getElementById('wheel-canvas');
-  const ctx = canvas.getContext('2d');
-  const spinBtn = document.getElementById('spin-btn');
-  const resultCard = document.getElementById('result-card');
-  const resultName = document.getElementById('result-name');
-  const resultTagline = document.getElementById('result-tagline');
-  const modal = document.getElementById('oracle-modal');
-  const closeBtn = modal.querySelector('.modal-close');
+  interface Restaurant {
+    name: string;
+    tagline: string;
+  }
+
+  const restaurants: Restaurant[] = JSON.parse(
+    (document.getElementById('wheel-data') as HTMLScriptElement).textContent ?? '[]'
+  );
+  const canvas = document.getElementById('wheel-canvas') as HTMLCanvasElement;
+  const ctx = canvas.getContext('2d')!;
+  const spinBtn = document.getElementById('spin-btn') as HTMLButtonElement;
+  const resultCard = document.getElementById('result-card') as HTMLElement;
+  const resultName = document.getElementById('result-name') as HTMLElement;
+  const resultTagline = document.getElementById('result-tagline') as HTMLElement;
+  const modal = document.getElementById('oracle-modal') as HTMLElement;
+  const closeBtn = modal.querySelector('.modal-close') as HTMLElement;
 
   const N = restaurants.length;
   const ARC = (2 * Math.PI) / N;
@@ -53,7 +60,7 @@ const { restaurants } = Astro.props;
   let angle = 0;
   let isSpinning = false;
 
-  function drawWheel(rot) {
+  function drawWheel(rot: number) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     ctx.save();
@@ -65,7 +72,7 @@ const { restaurants } = Astro.props;
     ctx.fill();
     ctx.restore();
 
-    restaurants.forEach((r, i) => {
+    restaurants.forEach((r: Restaurant, i: number) => {
       const start = rot + i * ARC;
       const end = start + ARC;
       const ci = i % COLORS.length;
@@ -91,7 +98,6 @@ const { restaurants } = Astro.props;
       ctx.restore();
     });
 
-    // Pointer triangle at top
     ctx.save();
     ctx.beginPath();
     ctx.moveTo(cx, cy - radius + 20);
@@ -105,7 +111,6 @@ const { restaurants } = Astro.props;
     ctx.stroke();
     ctx.restore();
 
-    // Center boss
     ctx.beginPath();
     ctx.arc(cx, cy, 24, 0, 2 * Math.PI);
     ctx.fillStyle = '#1C0A00';
@@ -120,7 +125,7 @@ const { restaurants } = Astro.props;
     ctx.fillText('🍗', cx, cy);
   }
 
-  function showResult(restaurant) {
+  function showResult(restaurant: Restaurant) {
     resultName.textContent = restaurant.name;
     resultTagline.textContent = '"' + restaurant.tagline + '"';
     resultCard.hidden = false;
@@ -143,7 +148,7 @@ const { restaurants } = Astro.props;
     const startAngle = angle;
     const startTime = performance.now();
 
-    function frame(now) {
+    function frame(now: number) {
       const t = Math.min((now - startTime) / duration, 1);
       const eased = 1 - Math.pow(1 - t, 4);
       angle = startAngle + (targetAngle - startAngle) * eased;
