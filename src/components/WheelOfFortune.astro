@@ -1,0 +1,366 @@
+---
+interface Restaurant {
+	name: string;
+	tagline: string;
+}
+
+interface Props {
+	restaurants: Restaurant[];
+}
+
+const { restaurants } = Astro.props;
+---
+
+<div id="oracle-modal" class="modal-overlay" hidden aria-modal="true" role="dialog" aria-labelledby="oracle-title">
+  <div class="modal-inner">
+    <button class="modal-close" aria-label="Close">✕</button>
+    <h2 id="oracle-title" class="modal-title">Wheel of ChickFortune</h2>
+    <div class="wheel-wrap">
+      <canvas id="wheel-canvas" width="400" height="400"></canvas>
+    </div>
+    <button id="spin-btn" class="spin-btn">🍗 SPIN THE WHEEL</button>
+    <div id="result-card" class="result-card" hidden>
+      <p class="oracle-decree">The Croydon Chicken Mile Oracle has spoken:</p>
+      <p id="result-name" class="result-name"></p>
+      <p id="result-tagline" class="result-tagline"></p>
+      <button id="copy-btn" class="copy-btn">📋 Copy to clipboard</button>
+      <p id="copy-confirm" class="copy-confirm" hidden>Copied! Now paste it in WhatsApp 🍗</p>
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ restaurants }}>
+  const canvas = document.getElementById('wheel-canvas');
+  const ctx = canvas.getContext('2d');
+  const spinBtn = document.getElementById('spin-btn');
+  const resultCard = document.getElementById('result-card');
+  const resultName = document.getElementById('result-name');
+  const resultTagline = document.getElementById('result-tagline');
+  const copyBtn = document.getElementById('copy-btn');
+  const copyConfirm = document.getElementById('copy-confirm');
+  const modal = document.getElementById('oracle-modal');
+  const closeBtn = modal.querySelector('.modal-close');
+
+  const N = restaurants.length;
+  const ARC = (2 * Math.PI) / N;
+  const POINTER = -Math.PI / 2;
+  const cx = canvas.width / 2;
+  const cy = canvas.height / 2;
+  const radius = cx - 8;
+
+  const COLORS = ['#E8210A', '#FFD000', '#FF7800', '#3D1C00'];
+  const TEXT_COLORS = ['#FFFDF8', '#1C0A00', '#FFFDF8', '#FFFDF8'];
+
+  let angle = 0;
+  let isSpinning = false;
+
+  function drawWheel(rot) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.save();
+    ctx.shadowColor = 'rgba(0,0,0,0.45)';
+    ctx.shadowBlur = 14;
+    ctx.beginPath();
+    ctx.arc(cx, cy, radius, 0, 2 * Math.PI);
+    ctx.fillStyle = '#1C0A00';
+    ctx.fill();
+    ctx.restore();
+
+    restaurants.forEach((r, i) => {
+      const start = rot + i * ARC;
+      const end = start + ARC;
+      const ci = i % COLORS.length;
+
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.arc(cx, cy, radius, start, end);
+      ctx.closePath();
+      ctx.fillStyle = COLORS[ci];
+      ctx.fill();
+      ctx.strokeStyle = '#1C0A00';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(start + ARC / 2);
+      ctx.textAlign = 'right';
+      ctx.fillStyle = TEXT_COLORS[ci];
+      ctx.font = 'bold 11px Nunito, sans-serif';
+      const label = r.name.length > 18 ? r.name.slice(0, 16) + '…' : r.name;
+      ctx.fillText(label, radius - 12, 4);
+      ctx.restore();
+    });
+
+    // Pointer triangle at top
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(cx, cy - radius + 20);
+    ctx.lineTo(cx - 12, cy - radius - 8);
+    ctx.lineTo(cx + 12, cy - radius - 8);
+    ctx.closePath();
+    ctx.fillStyle = '#FFFDF8';
+    ctx.strokeStyle = '#1C0A00';
+    ctx.lineWidth = 2;
+    ctx.fill();
+    ctx.stroke();
+    ctx.restore();
+
+    // Center boss
+    ctx.beginPath();
+    ctx.arc(cx, cy, 24, 0, 2 * Math.PI);
+    ctx.fillStyle = '#1C0A00';
+    ctx.fill();
+    ctx.strokeStyle = '#FFD000';
+    ctx.lineWidth = 3;
+    ctx.stroke();
+
+    ctx.font = '20px serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('🍗', cx, cy);
+  }
+
+  function showResult(restaurant) {
+    resultName.textContent = restaurant.name;
+    resultTagline.textContent = '"' + restaurant.tagline + '"';
+    copyConfirm.hidden = true;
+    resultCard.hidden = false;
+  }
+
+  function spin() {
+    if (isSpinning) return;
+    isSpinning = true;
+    spinBtn.disabled = true;
+    resultCard.hidden = true;
+
+    const winnerIdx = Math.floor(Math.random() * N);
+    const segCenter = winnerIdx * ARC + ARC / 2;
+    const base = POINTER - segCenter;
+    const minTarget = angle + 8 * 2 * Math.PI;
+    const n = Math.ceil((minTarget - base) / (2 * Math.PI));
+    const targetAngle = base + n * 2 * Math.PI;
+
+    const duration = 4500;
+    const startAngle = angle;
+    const startTime = performance.now();
+
+    function frame(now) {
+      const t = Math.min((now - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - t, 4);
+      angle = startAngle + (targetAngle - startAngle) * eased;
+      drawWheel(angle);
+
+      if (t < 1) {
+        requestAnimationFrame(frame);
+      } else {
+        angle = targetAngle;
+        isSpinning = false;
+        spinBtn.disabled = false;
+        showResult(restaurants[winnerIdx]);
+      }
+    }
+
+    requestAnimationFrame(frame);
+  }
+
+  spinBtn.addEventListener('click', spin);
+
+  copyBtn.addEventListener('click', async () => {
+    const text =
+      'The Croydon Chicken Mile Oracle has spoken: ' +
+      resultName.textContent +
+      ' — ' +
+      resultTagline.textContent +
+      ' 🍗 croydonchickenmile.co.uk';
+    try {
+      await navigator.clipboard.writeText(text);
+      copyConfirm.hidden = false;
+    } catch {
+      copyConfirm.textContent = text;
+      copyConfirm.hidden = false;
+    }
+  });
+
+  closeBtn.addEventListener('click', () => {
+    modal.hidden = true;
+  });
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) modal.hidden = true;
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !modal.hidden) modal.hidden = true;
+  });
+
+  document.getElementById('oracle-trigger')?.addEventListener('click', () => {
+    modal.hidden = false;
+    drawWheel(angle);
+  });
+
+  drawWheel(angle);
+</script>
+
+<style>
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(28, 10, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1rem;
+  }
+
+  .modal-overlay[hidden] {
+    display: none;
+  }
+
+  .modal-inner {
+    background: var(--cream);
+    border-radius: 1rem;
+    padding: 2rem 1.5rem;
+    max-width: 480px;
+    width: 100%;
+    position: relative;
+    text-align: center;
+    border: 3px solid var(--brown);
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: var(--brown);
+    line-height: 1;
+    padding: 0.25rem 0.4rem;
+    border-radius: 0.25rem;
+  }
+
+  .modal-close:hover {
+    color: var(--red);
+    background: rgba(0, 0, 0, 0.06);
+  }
+
+  .modal-title {
+    font-family: 'Bangers', cursive;
+    font-size: 2rem;
+    color: var(--red);
+    letter-spacing: 0.05em;
+    margin-bottom: 1.25rem;
+  }
+
+  .wheel-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+  }
+
+  #wheel-canvas {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .spin-btn {
+    font-family: 'Bangers', cursive;
+    font-size: 1.4rem;
+    letter-spacing: 0.08em;
+    background: var(--red);
+    color: var(--white);
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.6rem 2rem;
+    cursor: pointer;
+    transition:
+      background 0.15s,
+      transform 0.1s,
+      box-shadow 0.1s;
+    box-shadow: 0 4px 0 var(--red-dark);
+  }
+
+  .spin-btn:hover:not(:disabled) {
+    background: var(--red-dark);
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 var(--red-dark);
+  }
+
+  .spin-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .result-card {
+    margin-top: 1.25rem;
+    padding: 1.1rem 1rem;
+    background: var(--brown);
+    color: var(--cream);
+    border-radius: 0.75rem;
+    animation: pop-in 0.3s ease;
+  }
+
+  @keyframes pop-in {
+    from {
+      transform: scale(0.85);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  .oracle-decree {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.75;
+    margin-bottom: 0.3rem;
+  }
+
+  .result-name {
+    font-family: 'Bangers', cursive;
+    font-size: 1.8rem;
+    color: var(--yellow);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.2rem;
+  }
+
+  .result-tagline {
+    font-style: italic;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    opacity: 0.9;
+  }
+
+  .copy-btn {
+    background: var(--yellow);
+    color: var(--dark);
+    border: none;
+    border-radius: 0.4rem;
+    padding: 0.5rem 1.25rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .copy-btn:hover {
+    background: var(--yellow-light);
+  }
+
+  .copy-confirm {
+    margin-top: 0.6rem;
+    font-size: 0.85rem;
+    color: var(--yellow);
+    font-weight: 700;
+  }
+</style>
