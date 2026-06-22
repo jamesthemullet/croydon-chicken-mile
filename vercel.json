@@ -10,7 +10,7 @@
         { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains; preload" },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.tile.openstreetmap.org; script-src 'self' 'sha256-ipVu24fJB4N9VK6cLL0TmioKXqjvYwd6zJ/Sn+5suLg=' 'sha256-FOj1qfQAiYnFlonvJkMfcNfUKmpUaJGbFW/ekDSOLYs=' https://va.vercel-scripts.com https://vercel.live; connect-src 'self' https://va.vercel-scripts.com; frame-src https://vercel.live; frame-ancestors 'none'"
+          "value": "default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.tile.openstreetmap.org; script-src 'self' 'sha256-ipVu24fJB4N9VK6cLL0TmioKXqjvYwd6zJ/Sn+5suLg=' 'sha256-OS/JK8BaVNOa52bInlO2am3zKPb+SA6aXZYxw4slprk=' https://va.vercel-scripts.com https://vercel.live; connect-src 'self' https://va.vercel-scripts.com; frame-src https://vercel.live; frame-ancestors 'none'"
         }
       ]
     }
