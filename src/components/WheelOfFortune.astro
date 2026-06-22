@@ -20,7 +20,7 @@ const { restaurants } = Astro.props;
     </div>
     <button id="spin-btn" class="spin-btn">🍗 SPIN THE WHEEL</button>
     <div id="result-card" class="result-card" hidden>
-      <p class="oracle-decree">The Croydon Chicken Mile Oracle has spoken:</p>
+      <p class="oracle-decree">Wheel of ChickFortune has spoken:</p>
       <p id="result-name" class="result-name"></p>
       <p id="result-tagline" class="result-tagline"></p>
       <button id="copy-btn" class="copy-btn">📋 Copy to clipboard</button>
@@ -168,7 +168,7 @@ const { restaurants } = Astro.props;
 
   copyBtn.addEventListener('click', async () => {
     const text =
-      'The Croydon Chicken Mile Oracle has spoken: ' +
+      'Wheel of ChickFortune has spoken: ' +
       resultName.textContent +
       ' — ' +
       resultTagline.textContent +
