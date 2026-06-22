@@ -27,7 +27,10 @@ const { restaurants } = Astro.props;
   </div>
 </div>
 
-<script define:vars={{ restaurants }}>
+<script type="application/json" id="wheel-data" set:html={JSON.stringify(restaurants)}></script>
+
+<script>
+  const restaurants = JSON.parse(document.getElementById('wheel-data').textContent);
   const canvas = document.getElementById('wheel-canvas');
   const ctx = canvas.getContext('2d');
   const spinBtn = document.getElementById('spin-btn');
