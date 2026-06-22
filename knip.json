@@ -1,3 +1,4 @@
 {
-  "ignoreBinaries": ["findstr"]
+  "ignoreBinaries": ["findstr"],
+  "ignoreDependencies": ["@vercel/analytics"]
 }

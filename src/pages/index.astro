@@ -2,6 +2,7 @@
 import Chicken from "../components/Chicken.astro";
 import LeafletMap from "../components/LeafletMap.astro";
 import RestaurantCard from "../components/RestaurantCard.astro";
+import WheelOfFortune from "../components/WheelOfFortune.astro";
 import Layout from "../layouts/Layout.astro";
 
 const restaurants = [
@@ -200,6 +201,7 @@ const mapMarkers = restaurants
           Yeah, we said it.
         </p>
         <a href="#the-mile" class="cta-btn">Show Me The Birds →</a>
+        <button id="oracle-trigger" class="oracle-btn">🎰 Wheel of ChickFortune</button>
       </div>
       <div class="hero-chicken">
         <Chicken size={280} />
@@ -296,6 +298,8 @@ const mapMarkers = restaurants
       <LeafletMap markers={mapMarkers} center={[51.370, -0.1]} zoom={15} />
     </div>
   </section>
+
+  <WheelOfFortune restaurants={restaurants.map(r => ({ name: r.name, tagline: r.tagline }))} />
 
   </main>
 
@@ -447,6 +451,27 @@ const mapMarkers = restaurants
   }
 
   .cta-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 7px 7px 0 var(--dark);
+  }
+
+  .oracle-btn {
+    display: inline-block;
+    background: var(--red);
+    color: var(--white);
+    font-family: 'Bangers', cursive;
+    font-size: 1.5rem;
+    letter-spacing: 0.05em;
+    padding: 0.7rem 2rem;
+    border: 3px solid var(--dark);
+    border-radius: 8px;
+    box-shadow: 5px 5px 0 var(--dark);
+    transition: transform 0.12s, box-shadow 0.12s;
+    cursor: pointer;
+    margin-top: 0.5rem;
+  }
+
+  .oracle-btn:hover {
     transform: translate(-2px, -2px);
     box-shadow: 7px 7px 0 var(--dark);
   }
