@@ -1,4 +1,5 @@
 ---
+import ChampionBanner from "../components/ChampionBanner.astro";
 import Chicken from "../components/Chicken.astro";
 import LeafletMap from "../components/LeafletMap.astro";
 import RestaurantCard from "../components/RestaurantCard.astro";
@@ -302,6 +303,8 @@ const mapMarkers = restaurants
   <WheelOfFortune restaurants={restaurants.map(r => ({ name: r.name, tagline: r.tagline }))} />
 
   </main>
+
+  <ChampionBanner />
 
   <!-- FOOTER -->
   <footer>

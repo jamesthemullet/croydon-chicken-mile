@@ -1,0 +1,148 @@
+<div id="champion-banner" class="champion-banner" hidden aria-live="polite">
+  <div class="banner-inner">
+    <span class="banner-crown" aria-hidden="true">👑</span>
+    <p class="banner-text">My Croydon Chicken Mile champion: <strong id="champion-name"></strong> 🍗</p>
+    <button id="champion-copy-btn" class="banner-copy-btn" aria-label="Copy verdict to clipboard">Copy</button>
+    <button id="champion-dismiss-btn" class="banner-dismiss-btn" aria-label="Dismiss">✕</button>
+  </div>
+</div>
+
+<script>
+  const banner = document.getElementById('champion-banner') as HTMLElement;
+  const nameEl = document.getElementById('champion-name') as HTMLElement;
+  const copyBtn = document.getElementById('champion-copy-btn') as HTMLButtonElement;
+  const dismissBtn = document.getElementById('champion-dismiss-btn') as HTMLButtonElement;
+
+  const STORAGE_KEY = 'ccm-champion';
+
+  function showBanner(name: string) {
+    nameEl.textContent = name;
+    banner.hidden = false;
+    document.querySelectorAll<HTMLButtonElement>('.champion-btn').forEach(btn => {
+      const isChamp = btn.dataset.name === name;
+      btn.classList.toggle('is-champion', isChamp);
+      btn.textContent = isChamp ? '👑 My Champion!' : '👑 My Champion';
+    });
+  }
+
+  function pickChampion(name: string) {
+    localStorage.setItem(STORAGE_KEY, name);
+    showBanner(name);
+  }
+
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved) showBanner(saved);
+
+  document.addEventListener('click', (e) => {
+    const btn = (e.target as Element).closest<HTMLButtonElement>('.champion-btn');
+    if (btn?.dataset.name) pickChampion(btn.dataset.name);
+  });
+
+  copyBtn.addEventListener('click', async () => {
+    const name = localStorage.getItem(STORAGE_KEY);
+    if (!name) return;
+    const text = `My Croydon Chicken Mile champion: ${name} 🍗`;
+    try {
+      await navigator.clipboard.writeText(text);
+      copyBtn.textContent = 'Copied!';
+      setTimeout(() => { copyBtn.textContent = 'Copy'; }, 2000);
+    } catch {
+      copyBtn.textContent = 'Copy failed';
+      setTimeout(() => { copyBtn.textContent = 'Copy'; }, 2000);
+    }
+  });
+
+  dismissBtn.addEventListener('click', () => {
+    banner.hidden = true;
+    localStorage.removeItem(STORAGE_KEY);
+    document.querySelectorAll<HTMLButtonElement>('.champion-btn').forEach(btn => {
+      btn.classList.remove('is-champion');
+      btn.textContent = '👑 My Champion';
+    });
+  });
+</script>
+
+<style>
+  .champion-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--yellow);
+    border-top: 3px solid var(--dark);
+    z-index: 200;
+    animation: slide-up 0.3s ease;
+  }
+
+  .champion-banner[hidden] {
+    display: none;
+  }
+
+  @keyframes slide-up {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
+
+  .banner-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0.8rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .banner-crown {
+    font-size: 1.4rem;
+    flex-shrink: 0;
+  }
+
+  .banner-text {
+    flex: 1;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--dark);
+  }
+
+  .banner-copy-btn {
+    background: var(--dark);
+    color: var(--yellow);
+    font-family: 'Bangers', cursive;
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+    border: none;
+    border-radius: 6px;
+    padding: 0.35rem 1rem;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: opacity 0.15s;
+  }
+
+  .banner-copy-btn:hover {
+    opacity: 0.85;
+  }
+
+  .banner-dismiss-btn {
+    background: none;
+    border: none;
+    color: var(--dark);
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 0.2rem 0.4rem;
+    flex-shrink: 0;
+    opacity: 0.6;
+    line-height: 1;
+    border-radius: 4px;
+  }
+
+  .banner-dismiss-btn:hover {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  @media (max-width: 600px) {
+    .banner-text {
+      font-size: 0.85rem;
+    }
+  }
+</style>
