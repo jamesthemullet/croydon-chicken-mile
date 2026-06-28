@@ -51,9 +51,19 @@ const { markers = [], center = [51.3749, -0.0991], zoom = 15 } = Astro.props;
 		});
 
 		for (const { name, address, lat, lng } of markers) {
+			const popup = document.createElement("div");
+			const nameEl = document.createElement("strong");
+			nameEl.textContent = name;
+			const br = document.createElement("br");
+			const addrEl = document.createElement("span");
+			addrEl.textContent = address;
+			popup.appendChild(nameEl);
+			popup.appendChild(br);
+			popup.appendChild(addrEl);
+
 			L.marker([lat, lng], { icon })
 				.addTo(map)
-				.bindPopup(`<strong>${name}</strong><br><span>${address}</span>`);
+				.bindPopup(popup);
 		}
 	}
 
