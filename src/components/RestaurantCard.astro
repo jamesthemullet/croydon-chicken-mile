@@ -25,7 +25,15 @@ const { name, tagline, specialty, address, badge, image } = Astro.props;
     <h3 class="card-name">{name}</h3>
     <p class="card-tagline">"{tagline}"</p>
     <p class="card-specialty"><strong>Known for:</strong> {specialty}</p>
-    <p class="card-address">📍 {address}</p>
+    <a
+      class="card-address"
+      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${name} ${address}`)}`}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      📍 {address}
+      <span class="visually-hidden">(opens in Maps)</span>
+    </a>
   </div>
 </article>
 
@@ -126,5 +134,23 @@ const { name, tagline, specialty, address, badge, image } = Astro.props;
     color: var(--brown);
     margin-top: auto;
     padding-top: 0.4rem;
+    text-decoration: none;
+  }
+
+  .card-address:hover,
+  .card-address:focus {
+    text-decoration: underline;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 </style>
