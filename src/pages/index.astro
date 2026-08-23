@@ -232,7 +232,7 @@ const mapMarkers = restaurants
     <div class="container">
       <div class="about-inner">
         <div class="about-text">
-          <h2>A Love Letter to Croydon's Chicken Scene</h2>
+          <h2 id="about-heading">A Love Letter to Croydon's Chicken Scene</h2>
           <p>
             They built the Eiffel Tower in Paris. They put a big clock in London.
             Croydon? Croydon built a mile of the finest fried chicken establishments
@@ -276,7 +276,7 @@ const mapMarkers = restaurants
   <section id="the-mile" class="the-mile" aria-label="The Mile">
     <div class="container">
       <div class="section-header">
-        <h2 class="section-title">The Mile</h2>
+        <h2 id="the-mile-heading" class="section-title">The Mile</h2>
         <p class="section-sub">
           Your definitive guide to Croydon's finest chicken establishments.
         </p>
@@ -298,7 +298,7 @@ const mapMarkers = restaurants
   <!-- MAP -->
   <section class="map-section" aria-label="Find the Mile">
     <div class="container">
-      <h2>Find the Mile</h2>
+      <h2 id="map-heading">Find the Mile</h2>
       <p class="map-definition">From BoxPark down through High Street. As defined by the Croydon Tourist Board.</p>
       <LeafletMap markers={mapMarkers} center={[51.370, -0.1]} zoom={15} />
     </div>
