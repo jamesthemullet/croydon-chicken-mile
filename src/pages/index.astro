@@ -2,6 +2,7 @@
 import Chicken from "../components/Chicken.astro";
 import LeafletMap from "../components/LeafletMap.astro";
 import RestaurantCard from "../components/RestaurantCard.astro";
+import WheelOfFortune from "../components/WheelOfFortune.astro";
 import Layout from "../layouts/Layout.astro";
 
 const restaurants = [
@@ -143,7 +144,12 @@ const restaurants = [
 
 const mapMarkers = restaurants
 	.filter((r) => r.lat && r.lng)
-	.map((r) => ({ name: r.name, address: r.address, lat: r.lat!, lng: r.lng! }));
+	.map((r) => ({
+		name: r.name,
+		address: r.address,
+		lat: r.lat as number,
+		lng: r.lng as number,
+	}));
 ---
 
 <Layout>
@@ -186,6 +192,8 @@ const mapMarkers = restaurants
     </div>
   </nav>
 
+  <main>
+
   <!-- HERO -->
   <header class="hero">
     <div class="hero-bg-stripes" aria-hidden="true"></div>
@@ -198,6 +206,7 @@ const mapMarkers = restaurants
           Yeah, we said it.
         </p>
         <a href="#the-mile" class="cta-btn">Show Me The Birds →</a>
+        <button id="oracle-trigger" class="oracle-btn">🎰 Wheel of ChickFortune</button>
       </div>
       <div class="hero-chicken">
         <Chicken size={280} />
@@ -219,7 +228,7 @@ const mapMarkers = restaurants
   </header>
 
   <!-- ABOUT -->
-  <section id="about" class="about" aria-labelledby="about-heading">
+  <section id="about" class="about" aria-label="About">
     <div class="container">
       <div class="about-inner">
         <div class="about-text">
@@ -264,40 +273,40 @@ const mapMarkers = restaurants
   </section>
 
   <!-- THE MILE -->
-  <section id="the-mile" class="the-mile" aria-labelledby="the-mile-heading">
+  <section id="the-mile" class="the-mile" aria-label="The Mile">
     <div class="container">
       <div class="section-header">
         <h2 id="the-mile-heading" class="section-title">The Mile</h2>
         <p class="section-sub">
           Your definitive guide to Croydon's finest chicken establishments.
-          Rated in drumsticks, obviously.
         </p>
         <p class="mile-definition">
           From BoxPark down through High Street — as defined by the Croydon Tourist Board.
           There are chicken shops elsewhere. This is <em>the</em> Mile.
         </p>
-        <div class="drumstick-key">
-          <span>🍗🍗🍗🍗🍗 = Life changing &nbsp;&nbsp; 🍗🍗🍗 = Solid outing &nbsp;&nbsp; 🍗 = Still better than a salad</span>
-        </div>
       </div>
       <div class="restaurant-grid">
         {restaurants.map(r => <RestaurantCard {...r} />)}
       </div>
+      <p class="missed-a-shop">Missed a chicken shop? <a href="mailto:deepfried@croydonchickenmile.co.uk?subject=Fried%20Chicken%20Is%20Better%20Than%20Sex">Let us know.</a></p>
       <p class="disclaimer">
-        * Restaurant details are placeholders — replace with real names, addresses, and opinions.
         No chickens were harmed in the making of this website. (Some were, however, delicious.)
       </p>
     </div>
   </section>
 
   <!-- MAP -->
-  <section class="map-section" aria-labelledby="map-heading">
+  <section class="map-section" aria-label="Find the Mile">
     <div class="container">
       <h2 id="map-heading">Find the Mile</h2>
       <p class="map-definition">From BoxPark down through High Street. As defined by the Croydon Tourist Board.</p>
-      <LeafletMap markers={mapMarkers} center={[51.374, -0.1]} zoom={15} />
+      <LeafletMap markers={mapMarkers} center={[51.370, -0.1]} zoom={15} />
     </div>
   </section>
+
+  <WheelOfFortune restaurants={restaurants.map(r => ({ name: r.name, tagline: r.tagline }))} />
+
+  </main>
 
   <!-- FOOTER -->
   <footer>
@@ -311,6 +320,15 @@ const mapMarkers = restaurants
         <p class="small-muted">
           Not affiliated with any chicken. All opinions are the author's own and are delicious.
         </p>
+        <p class="small-muted">
+          Got suggestions to improve the website? Want to tell us about your favourite chicken shop on the Mile? Found a typo? <a href="mailto:deepfried@croydonchickenmile.co.uk?subject=Fried%20Chicken%20Is%20Better%20Than%20Sex">Let us know.</a>
+        </p>
+        <p class="small-muted">
+          This website is a bit of fun. If you are offended, we respectfully suggest you go eat some chick'n, no-chick'n, plant-based chicken, Quorn, or THIS Isn't Chicken — and think about what you've done.
+        </p>
+        <!-- <p class="small-muted">
+          An officially unofficial attraction of the <a href="https://croydon-tourist-board.vercel.app" target="_blank" rel="noopener">Croydon Tourist Board</a>.
+        </p> -->
       </div>
     </div>
   </footer>
@@ -441,6 +459,27 @@ const mapMarkers = restaurants
   }
 
   .cta-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 7px 7px 0 var(--dark);
+  }
+
+  .oracle-btn {
+    display: inline-block;
+    background: var(--red);
+    color: var(--white);
+    font-family: 'Bangers', cursive;
+    font-size: 1.5rem;
+    letter-spacing: 0.05em;
+    padding: 0.7rem 2rem;
+    border: 3px solid var(--dark);
+    border-radius: 8px;
+    box-shadow: 5px 5px 0 var(--dark);
+    transition: transform 0.12s, box-shadow 0.12s;
+    cursor: pointer;
+    margin-top: 0.5rem;
+  }
+
+  .oracle-btn:hover {
     transform: translate(-2px, -2px);
     box-shadow: 7px 7px 0 var(--dark);
   }
@@ -616,16 +655,6 @@ const mapMarkers = restaurants
     font-style: italic;
   }
 
-  .drumstick-key {
-    font-size: 0.8rem;
-    color: #888;
-    background: white;
-    border: 2px dashed #ddd;
-    border-radius: 8px;
-    padding: 0.5rem 1rem;
-    display: inline-block;
-  }
-
   .restaurant-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -633,10 +662,25 @@ const mapMarkers = restaurants
     margin-bottom: 2rem;
   }
 
+  .missed-a-shop {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 0.95rem;
+  }
+
+  .missed-a-shop a {
+    color: var(--red-dark);
+    text-decoration: underline;
+  }
+
+  .missed-a-shop a:hover {
+    text-decoration: underline;
+  }
+
   .disclaimer {
     text-align: center;
     font-size: 0.78rem;
-    color: #999;
+    color: var(--brown);
     font-style: italic;
     max-width: 600px;
     margin: 0 auto;
@@ -699,8 +743,17 @@ const mapMarkers = restaurants
 
   .small-muted {
     font-size: 0.8rem;
-    opacity: 0.6;
     margin-top: 0.5rem;
+  }
+
+  footer .small-muted a {
+    color: var(--yellow);
+    opacity: 1;
+    text-decoration: underline;
+  }
+
+  footer .small-muted a:hover {
+    text-decoration: underline;
   }
 
   /* RESPONSIVE */

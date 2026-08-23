@@ -27,36 +27,58 @@ const { markers = [], center = [51.3749, -0.0991], zoom = 15 } = Astro.props;
 	import "leaflet/dist/leaflet.css";
 
 	const el = document.getElementById("chicken-map") as HTMLElement;
-	const markers = JSON.parse(el.dataset.markers ?? "[]");
-	const center = JSON.parse(el.dataset.center ?? "[51.3749,-0.0991]");
-	const zoom = parseInt(el.dataset.zoom ?? "15");
 
-	const map = L.map(el).setView(center, zoom);
+	function initMap() {
+		const markers = JSON.parse(el.dataset.markers ?? "[]");
+		const center = JSON.parse(el.dataset.center ?? "[51.3749,-0.0991]");
+		const zoom = parseInt(el.dataset.zoom ?? "15");
 
-	L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-		attribution:
-			'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-		maxZoom: 19,
-	}).addTo(map);
+		const map = L.map(el).setView(center, zoom);
+		map.invalidateSize();
 
-	const icon = L.divIcon({
-		html: "🍗",
-		className: "ccm-marker",
-		iconSize: [32, 32],
-		iconAnchor: [16, 16],
-		popupAnchor: [0, -18],
-	});
+		L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+			attribution:
+				'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+			maxZoom: 19,
+		}).addTo(map);
 
-	for (const { name, address, lat, lng } of markers) {
-		L.marker([lat, lng], { icon })
-			.addTo(map)
-			.bindPopup(`<strong>${name}</strong><br><span>${address}</span>`);
+		const icon = L.divIcon({
+			html: "🍗",
+			className: "ccm-marker",
+			iconSize: [32, 32],
+			iconAnchor: [16, 16],
+			popupAnchor: [0, -18],
+		});
+
+		for (const { name, address, lat, lng } of markers) {
+			const popup = document.createElement("div");
+			const nameEl = document.createElement("strong");
+			nameEl.textContent = name;
+			const br = document.createElement("br");
+			const addrEl = document.createElement("span");
+			addrEl.textContent = address;
+			popup.appendChild(nameEl);
+			popup.appendChild(br);
+			popup.appendChild(addrEl);
+
+			L.marker([lat, lng], { icon })
+				.addTo(map)
+				.bindPopup(popup);
+		}
 	}
+
+	const observer = new IntersectionObserver((entries, obs) => {
+		if (entries[0].isIntersecting) {
+			obs.disconnect();
+			initMap();
+		}
+	}, { rootMargin: '200px' });
+	observer.observe(el);
 </script>
 
 <style>
 	#chicken-map {
-		height: 400px;
+		height: 560px;
 		border-radius: 12px;
 		border: 3px solid var(--dark);
 		box-shadow: 6px 6px 0 var(--dark);

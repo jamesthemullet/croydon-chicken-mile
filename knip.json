@@ -1,0 +1,4 @@
+{
+  "ignoreBinaries": ["findstr"],
+  "ignoreDependencies": ["@vercel/analytics"]
+}

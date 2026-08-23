@@ -4,8 +4,6 @@ interface Props {
 	tagline: string;
 	specialty: string;
 	address: string;
-	rating?: number;
-	mustTry?: string;
 	badge?: string;
 	image?: string;
 }
@@ -16,7 +14,7 @@ const { name, tagline, specialty, address, badge, image } = Astro.props;
   {badge && <span class="badge">{badge}</span>}
   <div class="card-header">
     {image ? (
-      <img src={image} alt={`Photo of ${name}`} class="card-img" />
+      <img src={image} alt={`Photo of ${name}`} class="card-img" loading="lazy" width="400" height="140" />
     ) : (
       <div class="placeholder-img" aria-label={`Photo of ${name}`}>
         <span class="img-icon">🍗</span>
@@ -27,13 +25,15 @@ const { name, tagline, specialty, address, badge, image } = Astro.props;
     <h3 class="card-name">{name}</h3>
     <p class="card-tagline">"{tagline}"</p>
     <p class="card-specialty"><strong>Known for:</strong> {specialty}</p>
-    <!-- <p class="card-must-try"><strong>Must try:</strong> {mustTry}</p> -->
-    <p class="card-address">📍 {address}</p>
-    <!-- <div class="drumstick-rating" aria-label={`${rating} out of 5 drumsticks`}>
-      {drumsticks.map(filled => (
-        <span class:list={['drumstick', { filled }]}>🍗</span>
-      ))}
-    </div> -->
+    <a
+      class="card-address"
+      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${name} ${address}`)}`}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      📍 {address}
+      <span class="visually-hidden">(opens in Maps)</span>
+    </a>
   </div>
 </article>
 
@@ -124,33 +124,33 @@ const { name, tagline, specialty, address, badge, image } = Astro.props;
     margin-bottom: 0.4rem;
   }
 
-  .card-specialty,
-  .card-must-try {
+  .card-specialty {
     font-size: 0.9rem;
     color: var(--dark);
   }
 
   .card-address {
     font-size: 0.82rem;
-    color: #666;
+    color: var(--brown);
     margin-top: auto;
     padding-top: 0.4rem;
+    text-decoration: none;
   }
 
-  .drumstick-rating {
-    display: flex;
-    gap: 2px;
-    margin-top: 0.5rem;
+  .card-address:hover,
+  .card-address:focus {
+    text-decoration: underline;
   }
 
-  .drumstick {
-    font-size: 1rem;
-    opacity: 0.2;
-    filter: grayscale(1);
-  }
-
-  .drumstick.filled {
-    opacity: 1;
-    filter: none;
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 </style>
