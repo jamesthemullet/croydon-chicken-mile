@@ -51,7 +51,7 @@ audit adds new findings to the bottom of each section and leaves checked items a
 
 ## 7. Content & feature accuracy
 
-- [ ] The "16 Chicken Shops" stat (`index.astro:255`) is a hardcoded literal, not derived from `restaurants.length` — currently correct but will silently drift if a restaurant is added/removed. Render `{restaurants.length}` instead. (found: 2026-09-01)
+- [x] The "16 Chicken Shops" stat (`index.astro:255`) is a hardcoded literal, not derived from `restaurants.length` — currently correct but will silently drift if a restaurant is added/removed. Render `{restaurants.length}` instead. (found: 2026-09-01) (resolved: 2026-09-01)
 - [ ] `e2e/about.spec.ts:14-19` asserts the stat text equals the hardcoded string `"16"`, duplicating (and only coincidentally matching) the separate drift-safe test at `about.spec.ts:21-29` that compares the stat against the actual rendered card count. Remove the hardcoded-value test in favor of the dynamic-comparison one. (found: 2026-09-01)
 - [ ] `README.md`'s tech stack section (`README.md:27-31`) omits Playwright, `@axe-core/playwright`, Leaflet, `@astrojs/vercel`, `@vercel/analytics`, and Knip, despite all being real dependencies with meaningful roles in the project. Update the tech stack list. (found: 2026-09-01)
 - [ ] `README.md`'s commands table (`README.md:16-25`) omits `test:e2e`, `knip`, and `lint:errors`, all of which exist in `package.json`. Add rows for them. (found: 2026-09-01)
