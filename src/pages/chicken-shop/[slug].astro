@@ -1,0 +1,263 @@
+---
+import type { GetStaticPaths } from "astro";
+import Chicken from "../../components/Chicken.astro";
+import { restaurants } from "../../data/restaurants";
+import Layout from "../../layouts/Layout.astro";
+
+export const getStaticPaths = (() =>
+	restaurants.map((restaurant) => ({
+		params: { slug: restaurant.slug },
+		props: { restaurant },
+	}))) satisfies GetStaticPaths;
+
+const { restaurant } = Astro.props;
+const { name, tagline, specialty, address, image, badge } = restaurant;
+
+const pageTitle = `${name} — Croydon Chicken Mile`;
+const pageDescription = `${tagline} Find ${name} on the Croydon Chicken Mile: ${address}.`;
+const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${name} ${address}`)}`;
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <nav>
+    <div class="nav-inner">
+      <span class="nav-logo">🍗 CCM</span>
+      <a href="/#the-mile">← Back to the Mile</a>
+    </div>
+  </nav>
+
+  <main>
+    <header class="shop-hero">
+      <div class="shop-hero-inner">
+        {badge && <span class="badge">{badge}</span>}
+        {image ? (
+          <img src={image} alt={`Photo of ${name}`} class="shop-img" loading="eager" width="400" height="260" />
+        ) : (
+          <div class="placeholder-img" aria-label={`Photo of ${name}`}>
+            <span class="img-icon">🍗</span>
+          </div>
+        )}
+        <div class="shop-hero-text">
+          <h1>{name}</h1>
+          <p class="shop-tagline">"{tagline}"</p>
+          <p class="shop-specialty"><strong>Known for:</strong> {specialty}</p>
+          <a class="shop-address" href={mapsHref} target="_blank" rel="noopener noreferrer">
+            📍 {address}
+            <span class="visually-hidden">(opens in Maps)</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <section class="shop-cta" aria-label="Back to the Mile">
+      <div class="container">
+        <Chicken size={90} />
+        <p>
+          One stop on a mile of legends. See the rest of the
+          <a href="/#the-mile">Croydon Chicken Mile</a>.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <p class="footer-title">Croydon Chicken Mile</p>
+      <p>Made with 🍗 and genuine civic pride.</p>
+    </div>
+  </footer>
+</Layout>
+
+<style>
+  nav {
+    background: var(--dark);
+    padding: 0.75rem 1.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 3px solid var(--yellow);
+  }
+
+  .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .nav-logo {
+    font-family: 'Bangers', cursive;
+    font-size: 1.4rem;
+    color: var(--yellow);
+    letter-spacing: 0.1em;
+    margin-right: auto;
+  }
+
+  .nav-inner a {
+    color: var(--cream);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: color 0.15s;
+  }
+
+  .nav-inner a:hover {
+    color: var(--yellow);
+  }
+
+  .shop-hero {
+    background: var(--cream);
+    padding: 4rem 1.5rem;
+  }
+
+  .shop-hero-inner {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
+    background: var(--white);
+    border: 3px solid var(--dark);
+    border-radius: 16px;
+    box-shadow: 8px 8px 0 var(--dark);
+    padding: 2rem;
+  }
+
+  .badge {
+    position: absolute;
+    top: -14px;
+    right: 16px;
+    background: var(--red);
+    color: white;
+    font-family: 'Bangers', cursive;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 2px solid var(--dark);
+    transform: rotate(3deg);
+  }
+
+  .shop-img {
+    width: 220px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 3px solid var(--dark);
+    flex-shrink: 0;
+  }
+
+  .placeholder-img {
+    width: 220px;
+    height: 220px;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, var(--red) 0%, var(--orange) 100%);
+    border-radius: 12px;
+    border: 3px solid var(--dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .img-icon {
+    font-size: 4rem;
+  }
+
+  .shop-hero-text h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    color: var(--red-dark);
+    line-height: 1.05;
+    margin-bottom: 0.6rem;
+  }
+
+  .shop-tagline {
+    font-style: italic;
+    color: var(--brown);
+    font-size: 1.05rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .shop-specialty {
+    font-size: 1rem;
+    color: var(--dark);
+    margin-bottom: 0.8rem;
+  }
+
+  .shop-address {
+    display: inline-block;
+    font-size: 0.95rem;
+    color: var(--brown);
+    text-decoration: none;
+  }
+
+  .shop-address:hover,
+  .shop-address:focus {
+    text-decoration: underline;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .shop-cta {
+    padding: 3rem 1.5rem 4rem;
+    background: var(--yellow);
+    border-top: 4px solid var(--dark);
+    border-bottom: 4px solid var(--dark);
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+  }
+
+  .shop-cta p {
+    font-size: 1.1rem;
+    color: var(--dark);
+    font-weight: 700;
+  }
+
+  .shop-cta a {
+    color: var(--red-dark);
+    text-decoration: underline;
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .footer-title {
+    font-family: 'Bangers', cursive;
+    font-size: 1.6rem;
+    color: var(--yellow);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.3rem;
+  }
+
+  @media (max-width: 600px) {
+    .shop-hero-inner {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>
