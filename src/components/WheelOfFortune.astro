@@ -19,7 +19,7 @@ const { restaurants } = Astro.props;
       <canvas id="wheel-canvas" width="400" height="400"></canvas>
     </div>
     <button id="spin-btn" class="spin-btn">🍗 SPIN THE WHEEL</button>
-    <div id="result-card" class="result-card" hidden>
+    <div id="result-card" class="result-card" aria-live="polite" hidden>
       <p class="oracle-decree">Wheel of ChickFortune has spoken:</p>
       <p id="result-name" class="result-name"></p>
       <p id="result-tagline" class="result-tagline"></p>
