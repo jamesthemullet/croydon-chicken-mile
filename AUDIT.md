@@ -36,7 +36,7 @@ audit adds new findings to the bottom of each section and leaves checked items a
 ## 4. SEO / metadata
 
 - [ ] JSON-LD `FoodEstablishment` items (`index.astro:161-183`) are missing fields Google's Local Business guidelines recommend: `image` (data already has `r.image`, just not included in the schema), `servesCuisine`, `url`, `telephone`, `priceRange`, `@id`. Extend the JSON-LD mapping to include at least `image` and `servesCuisine: r.specialty`. Note: as a single-page `ItemList` of businesses rather than one `LocalBusiness` per page, this markup is unlikely to produce a visible Search rich-result regardless — flag if per-restaurant pages become a future goal. (found: 2026-09-01)
-- [ ] `og:url` is not asserted in `e2e/seo.spec.ts` (only `og:title`, `og:description`, `og:image`, `og:locale` are checked). Add an assertion that `og:url` equals `https://croydonchickenmile.co.uk/`. (found: 2026-09-01)
+- [x] `og:url` is not asserted in `e2e/seo.spec.ts` (only `og:title`, `og:description`, `og:image`, `og:locale` are checked). Add an assertion that `og:url` equals `https://croydonchickenmile.co.uk/`. (found: 2026-09-01) (resolved: 2026-09-04)
 
 ## 5. Responsive / UX
 
