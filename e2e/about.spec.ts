@@ -11,13 +11,6 @@ test("about section heading is visible", async ({ page }) => {
 	);
 });
 
-test("stat shows 16 chicken shops", async ({ page }) => {
-	const stat = page
-		.locator(".stat")
-		.filter({ hasText: "Chicken Shops" });
-	await expect(stat.locator(".stat-number")).toHaveText("16");
-});
-
 test("stat count matches actual number of restaurant cards", async ({ page }) => {
 	const statNumber = await page
 		.locator(".stat")
