@@ -44,6 +44,14 @@ test("Open Graph locale is en_GB", async ({ page }) => {
 	await expect(ogLocale).toHaveAttribute("content", "en_GB");
 });
 
+test("Open Graph URL points to the production domain", async ({ page }) => {
+	const ogUrl = page.locator('meta[property="og:url"]');
+	await expect(ogUrl).toHaveAttribute(
+		"content",
+		"https://croydonchickenmile.co.uk/",
+	);
+});
+
 test("Twitter card meta tags are set", async ({ page }) => {
 	await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute(
 		"content",
