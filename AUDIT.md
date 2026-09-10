@@ -40,7 +40,7 @@ audit adds new findings to the bottom of each section and leaves checked items a
 
 ## 5. Responsive / UX
 
-- [ ] `#chicken-map` has a fixed `height: 560px` with no mobile override — the only sitewide `@media (max-width: 768px)` block (in `index.astro`) doesn't touch it. On a short phone viewport this could occupy most/all of the visible screen. Add a reduced-height rule under the existing breakpoint. (found: 2026-09-01)
+- [x] `#chicken-map` has a fixed `height: 560px` with no mobile override — the only sitewide `@media (max-width: 768px)` block (in `index.astro`) doesn't touch it. On a short phone viewport this could occupy most/all of the visible screen. Add a reduced-height rule under the existing breakpoint. (found: 2026-09-01) (resolved: 2026-09-10)
 - [ ] `.about-stats` (`grid-template-columns: 1fr 1fr`) isn't covered by the sitewide `@media (max-width: 768px)` block either, unlike `.about-inner`/`.footer-inner` which do collapse to one column there — likely fine at typical widths but unverified on narrow phones; worth a manual check. (found: 2026-09-01)
 
 ## 6. Security

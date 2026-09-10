@@ -84,6 +84,12 @@ const { markers = [], center = [51.3749, -0.0991], zoom = 15 } = Astro.props;
 		box-shadow: 6px 6px 0 var(--dark);
 	}
 
+	@media (max-width: 768px) {
+		#chicken-map {
+			height: 320px;
+		}
+	}
+
 	:global(.ccm-marker) {
 		font-size: 1.6rem;
 		line-height: 1;
