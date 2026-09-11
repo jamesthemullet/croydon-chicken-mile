@@ -74,4 +74,8 @@ test("JSON-LD structured data is present and valid", async ({ page }) => {
 	expect(parsed.itemListElement).toHaveLength(16);
 	expect(parsed.itemListElement[0]["@type"]).toBe("ListItem");
 	expect(parsed.itemListElement[0].item["@type"]).toBe("FoodEstablishment");
+	expect(parsed.itemListElement[0].item.servesCuisine).toBe("Chicken");
+	expect(parsed.itemListElement[0].item.image).toBe(
+		"https://croydonchickenmile.co.uk/images/poor-boys-boxpark.jpg",
+	);
 });
