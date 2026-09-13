@@ -29,6 +29,7 @@ const mapMarkers = restaurants
         "@type": "FoodEstablishment",
         "name": r.name,
         "description": r.tagline,
+        "servesCuisine": r.specialty,
         "address": {
           "@type": "PostalAddress",
           "streetAddress": r.address,
@@ -36,6 +37,9 @@ const mapMarkers = restaurants
           "addressRegion": "London",
           "addressCountry": "GB",
         },
+        ...(r.image ? {
+          "image": `https://croydonchickenmile.co.uk${r.image}`,
+        } : {}),
         ...(r.lat && r.lng ? {
           "geo": {
             "@type": "GeoCoordinates",
@@ -585,6 +589,10 @@ const mapMarkers = restaurants
     display: flex;
     align-items: center;
     gap: 2rem;
+  }
+
+  .footer-left {
+    flex-shrink: 0;
   }
 
   .footer-right {
