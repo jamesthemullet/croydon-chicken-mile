@@ -2,6 +2,7 @@
   "extends": ["config:recommended"],
   "timezone": "Europe/London",
   "schedule": ["* 2-5 * * *"],
+  "rebaseWhen": "conflicted",
   "minimumReleaseAge": "1 day",
   "packageRules": [
     {
