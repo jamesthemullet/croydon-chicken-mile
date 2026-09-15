@@ -20,9 +20,12 @@ Open [http://localhost:4321](http://localhost:4321).
 | `yarn preview` | Preview production build |
 | `yarn lint` | Run Biome linter |
 | `yarn lint:fix` | Auto-fix lint issues |
+| `yarn lint:errors` | Run Biome linter, filtered to errors only |
 | `yarn ts-check` | TypeScript check via Astro |
 | `yarn test` | Run unit tests |
 | `yarn test:watch` | Run tests in watch mode |
+| `yarn test:e2e` | Run Playwright end-to-end tests |
+| `yarn knip` | Find unused files, dependencies, and exports |
 
 ## Tech
 
