@@ -47,7 +47,7 @@ audit adds new findings to the bottom of each section and leaves checked items a
 
 - [ ] CSP's `script-src` and `style-src` both include `'unsafe-inline'` (`vercel.json:13`), significantly weakening XSS protection with no nonce/hash-based alternative in place. Evaluate moving to nonces/hashes for inline scripts and styles. (found: 2026-09-01)
 - [ ] Live response includes `Access-Control-Allow-Origin: *`, which isn't declared anywhere in `vercel.json` — likely a Vercel platform default for static assets given there are no API routes, but worth confirming it isn't exposing anything unintended. (found: 2026-09-01)
-- [ ] `package.json` has no `license` field (flagged by `yarn audit`'s warning output) — minor packaging hygiene gap, not a vulnerability. (found: 2026-09-01)
+- [x] `package.json` has no `license` field (flagged by `yarn audit`'s warning output) — minor packaging hygiene gap, not a vulnerability. (found: 2026-09-01) (resolved: 2026-09-16)
 
 ## 7. Content & feature accuracy
 
