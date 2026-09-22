@@ -32,3 +32,9 @@ Open [http://localhost:4321](http://localhost:4321).
 - [Astro](https://astro.build) — static site framework
 - [Biome](https://biomejs.dev) — linting & formatting
 - [Vitest](https://vitest.dev) — unit testing
+- [Playwright](https://playwright.dev) — end-to-end testing
+- [@axe-core/playwright](https://github.com/dequelabs/axe-core-npm/tree/develop/packages/playwright) — accessibility testing
+- [Leaflet](https://leafletjs.com) — interactive map
+- [@astrojs/vercel](https://docs.astro.build/en/guides/integrations-guide/vercel/) — Vercel deployment adapter
+- [@vercel/analytics](https://vercel.com/docs/analytics) — analytics
+- [Knip](https://knip.dev) — unused files, dependencies, and exports
