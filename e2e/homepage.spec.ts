@@ -18,6 +18,13 @@ test("nav links scroll to sections", async ({ page }) => {
 	await expect(page.getByRole("heading", { name: "The Mile", exact: true })).toBeInViewport();
 });
 
+test("nav About link scrolls to the About section", async ({ page }) => {
+	await page.goto("/");
+	await page.getByRole("navigation").getByRole("link", { name: "About" }).click();
+	const section = page.getByRole("region", { name: "About" });
+	await expect(section.getByRole("heading", { level: 2 })).toBeInViewport();
+});
+
 test("restaurant cards are rendered", async ({ page }) => {
 	await page.goto("/");
 	const cards = page.locator("article.card");
