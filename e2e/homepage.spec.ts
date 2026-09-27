@@ -18,6 +18,16 @@ test("nav links scroll to sections", async ({ page }) => {
 	await expect(page.getByRole("heading", { name: "The Mile", exact: true })).toBeInViewport();
 });
 
+test("About nav link scrolls to the About section", async ({ page }) => {
+	await page.goto("/");
+	await page.getByRole("navigation").getByRole("link", { name: "About" }).click();
+	await expect(
+		page.getByRole("heading", {
+			name: "A Love Letter to Croydon's Chicken Scene",
+		}),
+	).toBeInViewport();
+});
+
 test("restaurant cards are rendered", async ({ page }) => {
 	await page.goto("/");
 	const cards = page.locator("article.card");
