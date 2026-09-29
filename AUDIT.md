@@ -30,7 +30,7 @@ audit adds new findings to the bottom of each section and leaves checked items a
 
 ## 3. Performance
 
-- [ ] Leaflet's JS/CSS bundle loads eagerly via static top-level `import L from "leaflet"` / `import "leaflet/dist/leaflet.css"` in `LeafletMap.astro`, even though map *initialization* is correctly deferred via `IntersectionObserver`. The library bytes still download on every page load. Move the import inside the observer callback as a dynamic `await import("leaflet")`. (found: 2026-09-01)
+- [x] Leaflet's JS/CSS bundle loads eagerly via static top-level `import L from "leaflet"` / `import "leaflet/dist/leaflet.css"` in `LeafletMap.astro`, even though map *initialization* is correctly deferred via `IntersectionObserver`. The library bytes still download on every page load. Move the import inside the observer callback as a dynamic `await import("leaflet")`. (found: 2026-09-01) (resolved: 2026-09-29)
 - [ ] Restaurant photos in `public/images/` are unoptimized raw `.jpg` files (548KB–763KB each: `poor-boys-boxpark.jpg`, `raps-boxpark.jpg`, `rios-piri-piri.jpg`, `sams.jpg`) rendered at only 400×140 in `RestaurantCard.astro` — roughly 10-20x larger than needed, no webp/avif, no `astro:assets`/`<Image>` usage. Compress or convert to webp. (found: 2026-09-01)
 
 ## 4. SEO / metadata
