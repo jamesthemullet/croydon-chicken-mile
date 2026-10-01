@@ -4,5 +4,10 @@ export default defineConfig({
   test: {
     environment: 'node',
     exclude: ['e2e/**', 'node_modules/**'],
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'html'],
+      exclude: ['e2e/**', 'node_modules/**', '**/*.config.*', '.astro/**'],
+    },
   },
 });

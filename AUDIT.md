@@ -10,7 +10,7 @@ audit adds new findings to the bottom of each section and leaves checked items a
 
 ## 1. Test coverage — unit gaps and e2e
 
-- [ ] No coverage reporting configured for Vitest — `vitest.config.ts` has no `test.coverage` block, so no coverage % is ever produced. Add a `test.coverage` block (provider `v8`), `@vitest/coverage-v8` devDependency, and a `test:coverage` script. (found: 2026-09-01)
+- [x] No coverage reporting configured for Vitest — `vitest.config.ts` has no `test.coverage` block, so no coverage % is ever produced. Add a `test.coverage` block (provider `v8`), `@vitest/coverage-v8` devDependency, and a `test:coverage` script. (found: 2026-09-01) (resolved: 2026-09-30)
 - [ ] `WheelOfFortune.astro`'s spin logic has zero unit coverage — extract and unit-test the target-angle calculation (`spin()`, `WheelOfFortune.astro:134-168`) and result-text formatting in a new `src/components/WheelOfFortune.test.ts`. (found: 2026-09-01)
 - [ ] `WheelOfFortune.astro` has zero e2e coverage — no spec exercises spin interaction, result display, or keyboard operability. Add `e2e/wheel-of-fortune.spec.ts` covering: open modal via `#oracle-trigger`, click `#spin-btn`, wait for `#result-card` to populate, verify `#spin-btn` disabled mid-spin, verify Escape/backdrop-click close the modal. (found: 2026-09-01)
 - [ ] The nav "About" link (`nav a[href="#about"]`) is never clicked in any e2e spec — only "The Mile" link is tested in `e2e/homepage.spec.ts:15-19`. Add a test clicking it and asserting the About heading scrolls into view. (found: 2026-09-01)
