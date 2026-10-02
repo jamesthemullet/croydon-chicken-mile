@@ -40,3 +40,12 @@ test("clicking a marker opens a popup with the restaurant name", async ({
 	await expect(page.locator(".leaflet-popup-content")).toBeVisible();
 	await expect(page.locator(".leaflet-popup-content strong")).not.toBeEmpty();
 });
+
+test("markers expose an accessible name to screen readers", async ({ page }) => {
+	await scrollMapIntoView(page);
+	const markers = page.locator("#chicken-map .ccm-marker");
+	const count = await markers.count();
+	for (let i = 0; i < count; i++) {
+		await expect(markers.nth(i)).toHaveAttribute("aria-label", /.+/);
+	}
+});
