@@ -61,9 +61,10 @@ const { markers = [], center = [51.3749, -0.0991], zoom = 15 } = Astro.props;
 			popup.appendChild(br);
 			popup.appendChild(addrEl);
 
-			L.marker([lat, lng], { icon })
+			const marker = L.marker([lat, lng], { icon, title: name })
 				.addTo(map)
 				.bindPopup(popup);
+			marker.getElement()?.setAttribute("aria-label", name);
 		}
 	}
 
