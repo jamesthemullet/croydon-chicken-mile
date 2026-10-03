@@ -24,3 +24,4 @@ yarn-error.log*
 Thumbs.db
 .claude/settings.local.json
 test-results/
+/.vercel
