@@ -18,6 +18,10 @@ export function slugify(value: string): string {
 		.replace(/^-+|-+$/g, "");
 }
 
+export function googleMapsUrl(name: string, address: string): string {
+	return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${name} ${address}`)}`;
+}
+
 const restaurantData: Omit<Restaurant, "slug">[] = [
 	{
 		name: "Poor Boys @ BoxPark",

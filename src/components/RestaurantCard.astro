@@ -1,4 +1,6 @@
 ---
+import { googleMapsUrl } from "../data/restaurants";
+
 interface Props {
 	name: string;
 	tagline: string;
@@ -28,7 +30,7 @@ const { name, tagline, specialty, address, badge, image, slug } = Astro.props;
     <p class="card-specialty"><strong>Known for:</strong> {specialty}</p>
     <a
       class="card-address"
-      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${name} ${address}`)}`}
+      href={googleMapsUrl(name, address)}
       target="_blank"
       rel="noopener noreferrer"
     >

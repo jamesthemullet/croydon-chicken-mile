@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { restaurants, slugify } from "./restaurants";
+import { googleMapsUrl, restaurants, slugify } from "./restaurants";
 
 describe("slugify", () => {
 	it("lowercases and hyphenates spaces", () => {
@@ -15,6 +15,22 @@ describe("slugify", () => {
 	it("collapses non-alphanumeric runs and trims edge hyphens", () => {
 		expect(slugify("Rooster King - Croydon")).toBe("rooster-king-croydon");
 		expect(slugify("Poor Boys @ BoxPark")).toBe("poor-boys-boxpark");
+	});
+});
+
+describe("googleMapsUrl", () => {
+	it("encodes spaces in the name and address", () => {
+		expect(
+			googleMapsUrl("Rio's Piri Piri", "48 High St, Croydon CR0 1YB"),
+		).toBe(
+			"https://www.google.com/maps/search/?api=1&query=Rio's%20Piri%20Piri%2048%20High%20St%2C%20Croydon%20CR0%201YB",
+		);
+	});
+
+	it('encodes apostrophes as in "Sam\'s"', () => {
+		expect(googleMapsUrl("Sam's", "46 High St, Croydon CR0 1YB")).toBe(
+			"https://www.google.com/maps/search/?api=1&query=Sam's%2046%20High%20St%2C%20Croydon%20CR0%201YB",
+		);
 	});
 });
 
