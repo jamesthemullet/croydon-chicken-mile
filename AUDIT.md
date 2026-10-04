@@ -16,7 +16,7 @@ audit adds new findings to the bottom of each section and leaves checked items a
 - [x] The nav "About" link (`nav a[href="#about"]`) is never clicked in any e2e spec — only "The Mile" link is tested in `e2e/homepage.spec.ts:15-19`. Add a test clicking it and asserting the About heading scrolls into view. (found: 2026-09-01) (resolved: 2026-09-25)
 - [ ] The hero CTA button (`<a href="#the-mile" class="cta-btn">`, `index.astro:208`) is never clicked in any e2e spec. Add a test clicking it and asserting scroll to `#the-mile`. (found: 2026-09-01)
 - [ ] No test covers a restaurant card whose `image` prop is set but the URL fails to load (only the "no image at all" placeholder case is tested, `e2e/restaurant-cards.spec.ts:39-44`); `RestaurantCard.astro` also has no `onerror` fallback for this case at all. Decide whether to add an `onerror` fallback plus a matching e2e test with a broken image URL. (found: 2026-09-01)
-- [ ] No unit test covers the Google Maps `href` construction (`encodeURIComponent` of name+address) in `RestaurantCard.astro:30`. Add a unit test asserting correct escaping (spaces, apostrophes as in "Sam's"). (found: 2026-09-01)
+- [x] No unit test covers the Google Maps `href` construction (`encodeURIComponent` of name+address) in `RestaurantCard.astro:30`. Add a unit test asserting correct escaping (spaces, apostrophes as in "Sam's"). (found: 2026-09-01) (resolved: 2026-10-04)
 - [ ] `LeafletMap.astro:31-34`'s marker/center/zoom parsing-with-fallback logic (`JSON.parse` of `data-markers`/`data-center`, `parseInt` of `data-zoom`) has no unit tests. Extract and add `src/components/LeafletMap.test.ts` covering malformed JSON / missing dataset attributes. (found: 2026-09-01)
 
 ## 2. Accessibility
