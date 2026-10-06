@@ -26,7 +26,7 @@ audit adds new findings to the bottom of each section and leaves checked items a
 - [x] Wheel of Fortune spin result isn't announced to screen readers — `showResult()` just unhides `#result-card` with no `aria-live`/`role="status"`. Add `aria-live="polite"` to `#result-card`. (found: 2026-09-01) (resolved: 2026-09-03)
 - [ ] `.stat-label` text fails WCAG AA contrast — measured `rgb(255,248,238)` on `rgb(232,33,10)` at 13.6px/700 weight = 4.28:1 (needs 4.5:1 for non-large text). Lighten the label color or darken the card background. (found: 2026-09-01)
 - [ ] `.stat-number` contrast is borderline — `rgb(255,208,0)` on `rgb(232,33,10)` at 56px/400 weight = 3.07:1, just above the 3:1 large-text minimum with almost no margin. Consider nudging the palette for more headroom. (found: 2026-09-01)
-- [ ] The `accented` a11y dev-tool devDependency is gated behind `PUBLIC_ENABLE_ACCENTED`, which is never set anywhere in the repo (no `.env*`, CI config, or script sets it) — it currently does nothing in dev or CI. Either wire the env var into the dev script or drop the dependency. (found: 2026-09-01)
+- [x] The `accented` a11y dev-tool devDependency is gated behind `PUBLIC_ENABLE_ACCENTED`, which is never set anywhere in the repo (no `.env*`, CI config, or script sets it) — it currently does nothing in dev or CI. Either wire the env var into the dev script or drop the dependency. (found: 2026-09-01) (resolved: 2026-10-01)
 
 ## 3. Performance
 
