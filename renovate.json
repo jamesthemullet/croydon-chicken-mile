@@ -9,6 +9,12 @@
       "matchUpdateTypes": ["minor", "patch"],
       "groupName": "all non-major dependencies",
       "groupSlug": "all-minor-patch"
+    },
+    {
+      "description": "@vercel/routing-utils needs the path-to-regexp v6 API; the resolution only exists to force the 6.3.0 ReDoS fix",
+      "matchPackageNames": ["path-to-regexp"],
+      "matchUpdateTypes": ["major"],
+      "enabled": false
     }
   ]
 }
