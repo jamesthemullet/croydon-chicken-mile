@@ -37,5 +37,8 @@
     "knip": "^6.16.1",
     "typescript": "^6.0.0",
     "vitest": "^5.0.0"
+  },
+  "resolutions": {
+    "**/@vercel/routing-utils/path-to-regexp": "6.3.0"
   }
 }
