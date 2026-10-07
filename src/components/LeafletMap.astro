@@ -23,6 +23,8 @@ const { markers = [], center = [51.3749, -0.0991], zoom = 15 } = Astro.props;
 ></div>
 
 <script>
+	import { parseCenter, parseMarkers, parseZoom } from "../lib/mapData";
+
 	const el = document.getElementById("chicken-map") as HTMLElement;
 
 	async function initMap() {
@@ -31,9 +33,9 @@ const { markers = [], center = [51.3749, -0.0991], zoom = 15 } = Astro.props;
 			import("leaflet/dist/leaflet.css"),
 		]);
 
-		const markers = JSON.parse(el.dataset.markers ?? "[]");
-		const center = JSON.parse(el.dataset.center ?? "[51.3749,-0.0991]");
-		const zoom = parseInt(el.dataset.zoom ?? "15");
+		const markers = parseMarkers(el.dataset.markers);
+		const center = parseCenter(el.dataset.center);
+		const zoom = parseZoom(el.dataset.zoom);
 
 		const map = L.map(el).setView(center, zoom);
 		map.invalidateSize();
