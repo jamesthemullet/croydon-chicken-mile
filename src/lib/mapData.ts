@@ -8,6 +8,21 @@ export interface MapMarker {
 export const DEFAULT_CENTER: [number, number] = [51.3749, -0.0991];
 export const DEFAULT_ZOOM = 15;
 
+export function toMapMarkers<
+	T extends { name: string; address: string; lat?: number; lng?: number },
+>(restaurants: T[]): MapMarker[] {
+	return restaurants
+		.filter((r): r is T & { lat: number; lng: number } =>
+			Boolean(r.lat && r.lng),
+		)
+		.map((r) => ({
+			name: r.name,
+			address: r.address,
+			lat: r.lat,
+			lng: r.lng,
+		}));
+}
+
 export function parseMarkers(json: string | undefined): MapMarker[] {
 	if (!json) return [];
 	try {

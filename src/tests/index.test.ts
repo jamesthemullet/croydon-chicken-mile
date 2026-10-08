@@ -1,45 +1,44 @@
 import { describe, expect, it } from "vitest";
+import { toMapMarkers } from "../lib/mapData";
 
-// Logic extracted from index.astro mapMarkers derivation
-const hasCoords = (r: { lat?: number; lng?: number }) =>
-	Boolean(r.lat && r.lng);
-
-const toMarker = (r: {
-	name: string;
-	address: string;
-	lat: number;
-	lng: number;
-}) => ({ name: r.name, address: r.address, lat: r.lat, lng: r.lng });
-
-describe("mapMarkers filter", () => {
+describe("toMapMarkers", () => {
 	it("includes a restaurant with valid coords", () => {
-		expect(hasCoords({ lat: 51.374, lng: -0.1 })).toBe(true);
+		const r = { name: "Sam's", address: "46 High St", lat: 51.374, lng: -0.1 };
+		expect(toMapMarkers([r])).toEqual([r]);
 	});
 
 	it("excludes a restaurant with no lat", () => {
-		expect(hasCoords({ lng: -0.1 })).toBe(false);
+		const r = { name: "Sam's", address: "46 High St", lng: -0.1 };
+		expect(toMapMarkers([r])).toEqual([]);
 	});
 
 	it("excludes a restaurant with no lng", () => {
-		expect(hasCoords({ lat: 51.374 })).toBe(false);
+		const r = { name: "Sam's", address: "46 High St", lat: 51.374 };
+		expect(toMapMarkers([r])).toEqual([]);
 	});
 
 	it("excludes a restaurant with neither coord", () => {
-		expect(hasCoords({})).toBe(false);
+		const r = { name: "Sam's", address: "46 High St" };
+		expect(toMapMarkers([r])).toEqual([]);
 	});
 
-	it("maps to the correct marker shape", () => {
+	it("maps to the correct marker shape, dropping extra fields", () => {
 		const r = {
 			name: "Sam's",
 			address: "46 High St",
 			lat: 51.3722483,
 			lng: -0.1005771,
+			tagline: "unused here",
+			specialty: "Chicken",
+			slug: "sams",
 		};
-		expect(toMarker(r)).toEqual({
-			name: "Sam's",
-			address: "46 High St",
-			lat: 51.3722483,
-			lng: -0.1005771,
-		});
+		expect(toMapMarkers([r])).toEqual([
+			{
+				name: "Sam's",
+				address: "46 High St",
+				lat: 51.3722483,
+				lng: -0.1005771,
+			},
+		]);
 	});
 });
