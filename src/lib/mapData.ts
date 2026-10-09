@@ -5,6 +5,28 @@ export interface MapMarker {
 	lng: number;
 }
 
+interface RestaurantLike {
+	name: string;
+	address: string;
+	lat?: number;
+	lng?: number;
+}
+
+function hasCoords(
+	r: RestaurantLike,
+): r is RestaurantLike & { lat: number; lng: number } {
+	return Boolean(r.lat && r.lng);
+}
+
+export function toMapMarkers(restaurants: RestaurantLike[]): MapMarker[] {
+	return restaurants.filter(hasCoords).map((r) => ({
+		name: r.name,
+		address: r.address,
+		lat: r.lat,
+		lng: r.lng,
+	}));
+}
+
 export const DEFAULT_CENTER: [number, number] = [51.3749, -0.0991];
 export const DEFAULT_ZOOM = 15;
 
