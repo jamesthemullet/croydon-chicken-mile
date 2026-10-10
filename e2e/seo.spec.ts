@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { restaurants } from "../src/data/restaurants";
 
 test.beforeEach(async ({ page }) => {
 	await page.goto("/");
@@ -71,7 +72,7 @@ test("JSON-LD structured data is present and valid", async ({ page }) => {
 	const parsed = JSON.parse(raw ?? "{}");
 
 	expect(parsed["@type"]).toBe("ItemList");
-	expect(parsed.itemListElement).toHaveLength(16);
+	expect(parsed.itemListElement).toHaveLength(restaurants.length);
 	expect(parsed.itemListElement[0]["@type"]).toBe("ListItem");
 	expect(parsed.itemListElement[0].item["@type"]).toBe("FoodEstablishment");
 	expect(parsed.itemListElement[0].item.servesCuisine).toBe("Chicken");

@@ -1,4 +1,6 @@
 import { expect, test } from "@playwright/test";
+import { restaurants } from "../src/data/restaurants";
+import { toMapMarkers } from "../src/lib/mapData";
 
 test.beforeEach(async ({ page }) => {
 	await page.goto("/");
@@ -29,7 +31,7 @@ test("Leaflet initialises after the map scrolls into view", async ({ page }) => 
 test("map renders the correct number of markers", async ({ page }) => {
 	await scrollMapIntoView(page);
 	const markers = page.locator("#chicken-map .ccm-marker");
-	await expect(markers).toHaveCount(16);
+	await expect(markers).toHaveCount(toMapMarkers(restaurants).length);
 });
 
 test("clicking a marker opens a popup with the restaurant name", async ({
