@@ -1,8 +1,5 @@
 ---
-interface Restaurant {
-	name: string;
-	tagline: string;
-}
+import type { Restaurant } from "../types";
 
 interface Props {
 	restaurants: Restaurant[];
@@ -30,10 +27,7 @@ const { restaurants } = Astro.props;
 <script type="application/json" id="wheel-data" is:inline set:html={JSON.stringify(restaurants)}></script>
 
 <script>
-  interface Restaurant {
-    name: string;
-    tagline: string;
-  }
+  import type { Restaurant } from "../types";
 
   const restaurants: Restaurant[] = JSON.parse(
     (document.getElementById('wheel-data') as HTMLScriptElement).textContent ?? '[]'
