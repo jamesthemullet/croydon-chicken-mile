@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { restaurants } from "../src/data/restaurants";
 
 test.beforeEach(async ({ page }) => {
 	await page.goto("/");
@@ -6,7 +7,7 @@ test.beforeEach(async ({ page }) => {
 
 test("each card displays a restaurant name", async ({ page }) => {
 	const names = page.locator("article.card h3.card-name");
-	await expect(names).toHaveCount(16);
+	await expect(names).toHaveCount(restaurants.length);
 	await expect(names.first()).not.toBeEmpty();
 });
 

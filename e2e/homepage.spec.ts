@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { restaurants } from "../src/data/restaurants";
 
 test("page title is correct", async ({ page }) => {
 	await page.goto("/");
@@ -34,7 +35,7 @@ test("hero CTA button scrolls to The Mile section", async ({ page }) => {
 test("restaurant cards are rendered", async ({ page }) => {
 	await page.goto("/");
 	const cards = page.locator("article.card");
-	await expect(cards).toHaveCount(16);
+	await expect(cards).toHaveCount(restaurants.length);
 });
 
 test("mile definition appears in The Mile section", async ({ page }) => {
