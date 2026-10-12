@@ -15,7 +15,12 @@ const { name, tagline, specialty, address, badge, image, slug } = Astro.props;
   {badge && <span class="badge">{badge}</span>}
   <div class="card-header">
     {image ? (
-      <img src={image} alt={`Photo of ${name}`} class="card-img" loading="lazy" width="400" height="140" />
+      <>
+        <img src={image} alt={`Photo of ${name}`} class="card-img" loading="lazy" width="400" height="140" />
+        <div class="placeholder-img placeholder-fallback" aria-label={`Photo of ${name}`}>
+          <span class="img-icon">🍗</span>
+        </div>
+      </>
     ) : (
       <div class="placeholder-img" aria-label={`Photo of ${name}`}>
         <span class="img-icon">🍗</span>
@@ -37,6 +42,24 @@ const { name, tagline, specialty, address, badge, image, slug } = Astro.props;
     </a>
   </div>
 </article>
+
+<script>
+	document.addEventListener(
+		"error",
+		(event) => {
+			const img = event.target;
+			if (!(img instanceof HTMLImageElement) || !img.classList.contains("card-img")) {
+				return;
+			}
+			img.style.display = "none";
+			const fallback = img.nextElementSibling;
+			if (fallback instanceof HTMLElement) {
+				fallback.style.display = "flex";
+			}
+		},
+		true,
+	);
+</script>
 
 <style>
   .card {
@@ -97,6 +120,10 @@ const { name, tagline, specialty, address, badge, image, slug } = Astro.props;
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  .placeholder-fallback {
+    display: none;
   }
 
   .img-icon {
