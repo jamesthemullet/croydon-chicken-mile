@@ -52,3 +52,16 @@ test("cards with an image render an img element", async ({ page }) => {
 		.first();
 	await expect(samsCard.locator("img.card-img")).toBeVisible();
 });
+
+test("card falls back to the placeholder when its image fails to load", async ({
+	page,
+}) => {
+	await page.route("**/images/sams.jpg", (route) => route.abort());
+	await page.goto("/");
+	const samsCard = page
+		.locator("article.card")
+		.filter({ hasText: "Sam's" })
+		.first();
+	await expect(samsCard.locator("img.card-img")).toBeHidden();
+	await expect(samsCard.locator(".placeholder-img")).toBeVisible();
+});
