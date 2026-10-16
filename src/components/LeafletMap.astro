@@ -24,8 +24,9 @@ const { markers = [], center = [51.3749, -0.0991], zoom = 15 } = Astro.props;
 
 <script>
 	import { parseCenter, parseMarkers, parseZoom } from "../lib/mapData";
+	import { getEl } from "../lib/dom";
 
-	const el = document.getElementById("chicken-map") as HTMLElement;
+	const el = getEl("chicken-map");
 
 	async function initMap() {
 		const [{ default: L }] = await Promise.all([
