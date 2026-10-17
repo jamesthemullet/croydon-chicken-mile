@@ -28,18 +28,23 @@ const { restaurants } = Astro.props;
 
 <script>
   import type { Restaurant } from "../types";
+  import { getChild, getEl } from "../lib/dom";
 
   const restaurants: Restaurant[] = JSON.parse(
-    (document.getElementById('wheel-data') as HTMLScriptElement).textContent ?? '[]'
+    getEl<HTMLScriptElement>('wheel-data').textContent ?? '[]'
   );
-  const canvas = document.getElementById('wheel-canvas') as HTMLCanvasElement;
-  const ctx = canvas.getContext('2d')!;
-  const spinBtn = document.getElementById('spin-btn') as HTMLButtonElement;
-  const resultCard = document.getElementById('result-card') as HTMLElement;
-  const resultName = document.getElementById('result-name') as HTMLElement;
-  const resultTagline = document.getElementById('result-tagline') as HTMLElement;
-  const modal = document.getElementById('oracle-modal') as HTMLElement;
-  const closeBtn = modal.querySelector('.modal-close') as HTMLElement;
+  const canvas = getEl<HTMLCanvasElement>('wheel-canvas');
+  const ctx2d = canvas.getContext('2d');
+  if (!ctx2d) {
+    throw new Error('Expected a 2d canvas context to be available');
+  }
+  const ctx: CanvasRenderingContext2D = ctx2d;
+  const spinBtn = getEl<HTMLButtonElement>('spin-btn');
+  const resultCard = getEl('result-card');
+  const resultName = getEl('result-name');
+  const resultTagline = getEl('result-tagline');
+  const modal = getEl('oracle-modal');
+  const closeBtn = getChild(modal, '.modal-close');
   const oracleTrigger = document.getElementById('oracle-trigger') as HTMLElement | null;
   let lastFocused: HTMLElement | null = null;
 
