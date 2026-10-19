@@ -2,7 +2,7 @@
 import type { Restaurant } from "../types";
 
 interface Props {
-	restaurants: Restaurant[];
+	restaurants: Pick<Restaurant, "name" | "tagline">[];
 }
 
 const { restaurants } = Astro.props;
@@ -30,7 +30,9 @@ const { restaurants } = Astro.props;
   import type { Restaurant } from "../types";
   import { getChild, getEl } from "../lib/dom";
 
-  const restaurants: Restaurant[] = JSON.parse(
+  type WheelRestaurant = Pick<Restaurant, "name" | "tagline">;
+
+  const restaurants: WheelRestaurant[] = JSON.parse(
     getEl<HTMLScriptElement>('wheel-data').textContent ?? '[]'
   );
   const canvas = getEl<HTMLCanvasElement>('wheel-canvas');
@@ -111,7 +113,7 @@ const { restaurants } = Astro.props;
     ctx.fill();
     ctx.restore();
 
-    restaurants.forEach((r: Restaurant, i: number) => {
+    restaurants.forEach((r: WheelRestaurant, i: number) => {
       const start = rot + i * ARC;
       const end = start + ARC;
       const ci = i % COLORS.length;
@@ -164,7 +166,7 @@ const { restaurants } = Astro.props;
     ctx.fillText('🍗', cx, cy);
   }
 
-  function showResult(restaurant: Restaurant) {
+  function showResult(restaurant: WheelRestaurant) {
     resultName.textContent = restaurant.name;
     resultTagline.textContent = '"' + restaurant.tagline + '"';
     resultCard.hidden = false;
