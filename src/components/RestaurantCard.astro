@@ -1,13 +1,10 @@
 ---
-interface Props {
-	name: string;
-	tagline: string;
-	specialty: string;
-	address: string;
-	badge?: string;
-	image?: string;
-	slug: string;
-}
+import type { Restaurant } from "../types";
+
+type Props = Pick<
+	Restaurant,
+	"name" | "tagline" | "specialty" | "address" | "badge" | "image" | "slug"
+>;
 const { name, tagline, specialty, address, badge, image, slug } = Astro.props;
 ---
 

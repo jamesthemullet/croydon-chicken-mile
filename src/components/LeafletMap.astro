@@ -1,13 +1,8 @@
 ---
-interface Marker {
-	name: string;
-	address: string;
-	lat: number;
-	lng: number;
-}
+import type { MapMarker } from "../lib/mapData";
 
 interface Props {
-	markers?: Marker[];
+	markers?: MapMarker[];
 	center?: [number, number];
 	zoom?: number;
 }

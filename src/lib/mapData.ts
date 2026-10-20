@@ -1,16 +1,11 @@
-export interface MapMarker {
-	name: string;
-	address: string;
+import type { Restaurant } from "../types";
+
+export type MapMarker = Pick<Restaurant, "name" | "address"> & {
 	lat: number;
 	lng: number;
-}
+};
 
-interface RestaurantLike {
-	name: string;
-	address: string;
-	lat?: number;
-	lng?: number;
-}
+type RestaurantLike = Pick<Restaurant, "name" | "address" | "lat" | "lng">;
 
 function hasCoords(
 	r: RestaurantLike,

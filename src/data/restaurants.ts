@@ -1,14 +1,4 @@
-export interface Restaurant {
-	name: string;
-	tagline: string;
-	specialty: string;
-	address: string;
-	image?: string;
-	badge?: string;
-	lat?: number;
-	lng?: number;
-	slug: string;
-}
+import type { Restaurant } from "../types";
 
 export function slugify(value: string): string {
 	return value
