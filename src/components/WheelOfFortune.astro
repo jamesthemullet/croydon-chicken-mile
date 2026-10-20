@@ -29,6 +29,7 @@ const { restaurants } = Astro.props;
 <script>
   import type { Restaurant } from "../types";
   import { getChild, getEl } from "../lib/dom";
+  import { computeTargetAngle, formatResultTagline } from "../lib/wheel";
 
   type WheelRestaurant = Pick<Restaurant, "name" | "tagline">;
 
@@ -90,7 +91,6 @@ const { restaurants } = Astro.props;
 
   const N = restaurants.length;
   const ARC = (2 * Math.PI) / N;
-  const POINTER = -Math.PI / 2;
   const cx = canvas.width / 2;
   const cy = canvas.height / 2;
   const radius = cx - 8;
@@ -168,7 +168,7 @@ const { restaurants } = Astro.props;
 
   function showResult(restaurant: WheelRestaurant) {
     resultName.textContent = restaurant.name;
-    resultTagline.textContent = '"' + restaurant.tagline + '"';
+    resultTagline.textContent = formatResultTagline(restaurant.tagline);
     resultCard.hidden = false;
   }
 
@@ -179,11 +179,7 @@ const { restaurants } = Astro.props;
     resultCard.hidden = true;
 
     const winnerIdx = Math.floor(Math.random() * N);
-    const segCenter = winnerIdx * ARC + ARC / 2;
-    const base = POINTER - segCenter;
-    const minTarget = angle + 8 * 2 * Math.PI;
-    const n = Math.ceil((minTarget - base) / (2 * Math.PI));
-    const targetAngle = base + n * 2 * Math.PI;
+    const targetAngle = computeTargetAngle(angle, winnerIdx, N);
 
     const duration = 4500;
     const startAngle = angle;
