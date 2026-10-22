@@ -1,0 +1,88 @@
+---
+interface Props {
+	name: string;
+	tagline: string;
+}
+const { name, tagline } = Astro.props;
+---
+
+<div class="share-wrap">
+  <button id="share-btn" type="button" class="share-btn" data-name={name} data-tagline={tagline}>
+    📤 Share this shop
+  </button>
+  <p id="share-feedback" class="share-feedback" role="status" aria-live="polite" hidden>
+    Link copied — go forth and spread the word!
+  </p>
+</div>
+
+<script>
+	import { getEl } from "../lib/dom";
+	import { buildShareData } from "../lib/share";
+
+	const button = getEl<HTMLButtonElement>("share-btn");
+	const feedback = getEl<HTMLParagraphElement>("share-feedback");
+
+	button.addEventListener("click", async () => {
+		const shareData = buildShareData(
+			button.dataset.name ?? "",
+			button.dataset.tagline ?? "",
+			window.location.href,
+		);
+
+		if (navigator.share) {
+			try {
+				await navigator.share(shareData);
+			} catch {
+				// User dismissed the share sheet — nothing to do.
+			}
+			return;
+		}
+
+		try {
+			await navigator.clipboard.writeText(shareData.url);
+		} catch {
+			window.prompt("Copy this link:", shareData.url);
+			return;
+		}
+
+		feedback.hidden = false;
+		window.setTimeout(() => {
+			feedback.hidden = true;
+		}, 2500);
+	});
+</script>
+
+<style>
+  .share-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .share-btn {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--dark);
+    background: var(--yellow);
+    border: 3px solid var(--dark);
+    border-radius: 10px;
+    padding: 0.6rem 1.4rem;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 var(--dark);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .share-btn:hover,
+  .share-btn:focus-visible {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--dark);
+  }
+
+  .share-feedback {
+    font-size: 0.85rem;
+    color: var(--brown);
+    font-weight: 700;
+  }
+</style>
