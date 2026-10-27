@@ -83,9 +83,10 @@ rather than patching app code to accommodate a dependency bump — unless the fi
 
 ## 6. Commit and open a PR
 
-Commit `package.json` and `yarn.lock` only, push, then open a PR against `main` using
-`mcp__github__create_pull_request` (do **not** use `gh`). Keep the body brief — a few bullets
-per section, no advisory dumps:
+Commit `package.json` and `yarn.lock` only, push, then open a PR against `main` with
+`gh pr create --base main --title "..." --body-file <file>` (write the body to a file in the
+scratchpad dir to avoid shell-quoting issues). Keep the body brief — a few bullets per section,
+no advisory dumps:
 
 ```markdown
 ## Summary

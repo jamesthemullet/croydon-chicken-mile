@@ -39,6 +39,7 @@
     "vitest": "^5.0.0"
   },
   "resolutions": {
-    "**/@vercel/routing-utils/path-to-regexp": "6.3.0"
+    "**/@vercel/routing-utils/path-to-regexp": "6.3.0",
+    "**/@vercel/cli-config/zod": "^4.6.6"
   }
 }
