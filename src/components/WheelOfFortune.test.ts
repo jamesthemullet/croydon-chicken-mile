@@ -1,5 +1,36 @@
-import { describe, expect, it } from "vitest";
-import { computeTargetAngle, formatResultTagline } from "../lib/wheel";
+import { describe, expect, it, vi } from "vitest";
+import {
+	computeTargetAngle,
+	drawWheel,
+	formatResultTagline,
+	pickWinnerIndex,
+} from "../lib/wheel";
+
+function createMockContext() {
+	return {
+		save: vi.fn(),
+		restore: vi.fn(),
+		beginPath: vi.fn(),
+		closePath: vi.fn(),
+		moveTo: vi.fn(),
+		lineTo: vi.fn(),
+		arc: vi.fn(),
+		fill: vi.fn(),
+		stroke: vi.fn(),
+		clearRect: vi.fn(),
+		translate: vi.fn(),
+		rotate: vi.fn(),
+		fillText: vi.fn(),
+		fillStyle: "",
+		strokeStyle: "",
+		lineWidth: 0,
+		shadowColor: "",
+		shadowBlur: 0,
+		font: "",
+		textAlign: "",
+		textBaseline: "",
+	} as unknown as CanvasRenderingContext2D;
+}
 
 describe("computeTargetAngle", () => {
 	it("lands on the winning segment's center under the pointer", () => {
@@ -26,6 +57,54 @@ describe("computeTargetAngle", () => {
 		const targetA = computeTargetAngle(0, 0, 16);
 		const targetB = computeTargetAngle(0, 1, 16);
 		expect(targetA).not.toBeCloseTo(targetB, 5);
+	});
+});
+
+describe("pickWinnerIndex", () => {
+	it("returns an index within range", () => {
+		for (let i = 0; i < 20; i++) {
+			const idx = pickWinnerIndex(16);
+			expect(idx).toBeGreaterThanOrEqual(0);
+			expect(idx).toBeLessThan(16);
+		}
+	});
+
+	it("uses Math.random to pick the index", () => {
+		const randomSpy = vi.spyOn(Math, "random").mockReturnValue(0.5);
+		expect(pickWinnerIndex(16)).toBe(8);
+		randomSpy.mockRestore();
+	});
+});
+
+describe("drawWheel", () => {
+	it("clears the canvas and draws a segment per restaurant without throwing", () => {
+		const ctx = createMockContext();
+		const canvas = { width: 400, height: 400 };
+		const restaurants = [
+			{ name: "Sam's", tagline: "Hotter than your ex" },
+			{ name: "Dave's Hot Chicken", tagline: "Famously spicy" },
+		];
+
+		expect(() => drawWheel(ctx, canvas, restaurants, 0)).not.toThrow();
+		expect(ctx.clearRect).toHaveBeenCalledWith(0, 0, 400, 400);
+		expect(ctx.fillText).toHaveBeenCalled();
+	});
+
+	it("truncates long restaurant names when labeling segments", () => {
+		const ctx = createMockContext();
+		const canvas = { width: 400, height: 400 };
+		const restaurants = [
+			{ name: "A Very Long Restaurant Name That Overflows", tagline: "x" },
+		];
+
+		drawWheel(ctx, canvas, restaurants, 0);
+
+		const labelCall = (
+			ctx.fillText as ReturnType<typeof vi.fn>
+		).mock.calls.find(
+			(call) => typeof call[0] === "string" && call[0].endsWith("…"),
+		);
+		expect(labelCall?.[0]).toBe("A Very Long Rest…");
 	});
 });
 
