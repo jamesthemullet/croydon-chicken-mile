@@ -1,4 +1,4 @@
 {
   "ignoreBinaries": ["findstr"],
-  "ignoreDependencies": ["@vercel/analytics"]
+  "ignoreDependencies": ["@vercel/analytics", "@emnapi/runtime"]
 }
