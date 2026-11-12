@@ -41,21 +41,32 @@ const { name, tagline, specialty, address, badge, image, slug } = Astro.props;
 </article>
 
 <script>
+	function showFallback(img: HTMLImageElement) {
+		img.style.display = "none";
+		const fallback = img.nextElementSibling;
+		if (fallback instanceof HTMLElement) {
+			fallback.style.display = "flex";
+		}
+	}
+
 	document.addEventListener(
 		"error",
 		(event) => {
 			const img = event.target;
-			if (!(img instanceof HTMLImageElement) || !img.classList.contains("card-img")) {
-				return;
-			}
-			img.style.display = "none";
-			const fallback = img.nextElementSibling;
-			if (fallback instanceof HTMLElement) {
-				fallback.style.display = "flex";
+			if (img instanceof HTMLImageElement && img.classList.contains("card-img")) {
+				showFallback(img);
 			}
 		},
 		true,
 	);
+
+	// Module scripts run after parsing, so an image may have already failed
+	// before the listener above was attached.
+	for (const img of document.querySelectorAll<HTMLImageElement>("img.card-img")) {
+		if (img.complete && img.naturalWidth === 0) {
+			showFallback(img);
+		}
+	}
 </script>
 
 <style>
